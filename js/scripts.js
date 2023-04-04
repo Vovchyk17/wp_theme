@@ -33,7 +33,7 @@ $(document).ready(function() {
     body.on('keyup', function (e) {
         if (e.keyCode === 27 && menu__toggle.hasClass('is_active')) {
             $('.menu__toggle.is_active').click();
-            $('a[href="#skip_to_content"]').focus();
+            $('a[href="#main"]').focus();
         }
     });
     // open/close sub-menu with Tab key
