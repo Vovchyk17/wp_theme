@@ -18,7 +18,7 @@ if( @!WP_DEBUG) { ob_start('ob_html_compress'); }
     </head>
 
     <body <?php body_class(); ?> data-a="<?php echo esc_url(admin_url('admin-ajax.php')); ?>">
-        <div id="main">
+        <main id="main">
             <a href="#skip_to_content" class="button skip_to_content" tabindex="9">Skip to content</a>
 
             <header>

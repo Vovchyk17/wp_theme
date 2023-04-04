@@ -1,4 +1,4 @@
-</div>
+</main>
 
 <footer>
     <div class="container flex">
