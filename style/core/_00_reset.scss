@@ -5,26 +5,24 @@
   padding: 0;
   outline: 0 none;
   -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+  box-sizing: border-box;
+  &:before, &:after {box-sizing: inherit}
 }
-*, *:before, *:after {box-sizing: inherit}
 
-html, body {margin: 0; height: 100%}
+html, body {height: 100%}
 
 html {
-  font: 300 #{$fb / 1.333333333334}/1.5 $ff;
-  box-sizing: border-box;
+  font: 300 #{$fb}/1.5 $ff;
   -ms-text-size-adjust: none;
   -webkit-text-size-adjust: none;
   -webkit-overflow-scrolling: touch;
   -webkit-font-smoothing: antialiased;
-  @include rwd-min(768) {font-size: $fb}
 }
 
 body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  font-size: $fb;
   color: $tx;
   background-color: #fff;
   @include rwd-max(1024) { &.is_overflow {overflow: hidden} }
