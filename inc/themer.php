@@ -58,18 +58,6 @@ function wpa_activate_theme() {
 	update_option('uploads_use_yearmonth_folders', 0);
 }
 
-// compress HTML
-function ob_html_compress($buf){
-	$preResult = preg_replace('/(?:(?:\/\*(?:[^*]|(?:\*+[^*\/]))*\*+\/)|(?:(?<!\:|\\\|\'|\")\/\/.*))/', ' ', $buf);
-	$out       = preg_replace(
-		array('/<!--(?>(?!\[).)(.*)(?>(?!\]).)-->/Uis', '/[[:blank:]]+/'),
-		array('', ' '),
-		str_replace(array("\n", "\r", "\t"), '', $preResult)
-	);
-
-	return nl2br($out);
-}
-
 // remove default menu classes + new custom classes
 function wpa_discard_menu_classes($classes, $item) {
 	$classes = array_filter(

@@ -1,9 +1,4 @@
-<?php
-if ( @ ! WP_DEBUG ) {
-	ob_start( 'ob_html_compress' );
-}
-( function_exists( 'pll_current_language' ) ) ? $lang = pll_current_language() : $lang = 'en';
-?>
+<?php ( function_exists( 'pll_current_language' ) ) ? $lang = pll_current_language() : $lang = 'en'; ?>
 <!DOCTYPE html>
 <html lang="<?php echo $lang; ?>">
 <head>
