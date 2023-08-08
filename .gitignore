@@ -47,18 +47,31 @@ Temporary Items
 
 .apdisk
 
-*.idea
+# JetBrains IDEs configuration directory
+.idea/
 
+#VSCode configuration directory
+.vscode/
+
+# Ignore sourcemap files for CSS
 *.css.map
 
+# Specific style paths
 /style/style.css
 /style/templates/*.css
 /style/templates/*/*.css
 
+# Commonly ignored directories for Node and PHP development
 node_modules/
+vendor/
+
+# Log files
+npm-debug.log
+yarn-error.log
+
+# Webpack output directory
+dist/
 
 package-lock.json
 
-vendor/
-composer.json
-composer.lock
+desktop.ini
