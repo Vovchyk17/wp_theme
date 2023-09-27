@@ -108,4 +108,4 @@ add_filter( 'render_block', function( $block_content, $block ) {
 }, 10, 2 );
 
 // general - remove admin bar on front end
-add_filter( 'show_admin_bar', '__return_false' );
+/*add_filter( 'show_admin_bar', '__return_false' );*/
