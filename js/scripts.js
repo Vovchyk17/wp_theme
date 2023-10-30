@@ -44,8 +44,8 @@ $(document).ready(function() {
         $(this).parent().addClass('is_focused');
     });
     menu__primary.find('.sub-menu').each(function () {
-        let sub_menu_links = $(this).find('> li > a');
-        let last_sub_menu_link = sub_menu_links.last();
+        const sub_menu_links = $(this).find('> li > a');
+        const last_sub_menu_link = sub_menu_links.last();
         last_sub_menu_link.on('blur', function () {
             $(this).parents('.menu-item-has-children').removeClass('is_focused');
         });
@@ -58,7 +58,7 @@ $(document).ready(function() {
     // append "plus" element in sub-menu parent item
     menu__a_parent.after('<span class="rwd_show" tabindex="0" role="button" aria-label="Sub-menu toggle" aria-expanded="false" />');
     function sub_menu_action(elem) {
-        let exp = elem.attr('aria-expanded');
+        const exp = elem.attr('aria-expanded');
         (exp === 'false') ? elem.attr('aria-expanded', 'true') : elem.attr('aria-expanded', 'false');
         elem.toggleClass('is_open').next().stop().toggle();
     }
@@ -155,7 +155,7 @@ $(document).ready(function() {
 
     // scroll to
     $('a[data-scrollto]').on('click', function () {
-        let anchor = $(this).data('scrollto');
+        const anchor = $(this).data('scrollto');
 
         if ($(anchor).length > 0) {
             $('html, body').animate({
@@ -167,8 +167,8 @@ $(document).ready(function() {
 
     // block - accordion
     function acc_action(elem) {
-        let exp = elem.attr('aria-expanded');
-        let hid = elem.next().attr('aria-hidden');
+        const exp = elem.attr('aria-expanded');
+        const hid = elem.next().attr('aria-hidden');
         (exp === 'false') ? elem.attr('aria-expanded', 'true') : elem.attr('aria-expanded', 'false');
         (hid === 'true') ? elem.next().attr('aria-hidden', 'false') : elem.next().attr('aria-hidden', 'true');
         elem.toggleClass('is_open').next().toggle();
@@ -197,13 +197,13 @@ $(window).on('load', function() {
 
     // swiper - block__custom_slider
     $('.block__custom_slider').each(function () {
-        let slider_holder = $(this),
+        const slider_holder = $(this),
             swiper_instance = slider_holder.find('.swiper'),
             next = slider_holder.find('.sw_next'),
             prev = slider_holder.find('.sw_prev'),
             pagination = slider_holder.find('.sw_pagination');
 
-        let block_slider = new Swiper(swiper_instance[0], {
+        const block_slider = new Swiper(swiper_instance[0], {
             navigation: {
                 nextEl: next[0],
                 prevEl: prev[0]
@@ -231,7 +231,7 @@ $(window).on('load', function() {
 
     // custom class for video in content (iframe)
     $('.content iframe').each(function(i) {
-        let t = $(this),
+        const t = $(this),
             p = t.parent();
         if ( (p.is('p') || p.is('span') ) && !p.hasClass('full_frame')) {
             p.addClass('full_frame');

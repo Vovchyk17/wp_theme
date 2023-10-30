@@ -107,10 +107,41 @@ small, sub {
 
 em, i {font-weight: 500}
 
-figure {
-  &.wp-block-image {margin-bottom: 30px}
-  &.aligncenter img {margin: 0 auto}
+.wp-block-image {
+  position: relative;
+  margin: 56px 0;
+  @include rwd-min(1025) {
+    margin: 80px 0;
+  }
+  &.size-1536x1536, .size-1536x1536 {
+    width: 100vw;
+    margin-left: calc(-50vw + 50%);
+    @include rwd-min(1536) {
+      width: 1536px;
+      margin-left: calc((100% - 1536px) / 2);
+    }
+  }
+  &.size-2048x2048, .size-2048x2048 {
+    width: 100vw;
+    margin-left: calc(-50vw + 50%);
+    @include rwd-min(2048) {
+      width: 2048px;
+      margin-left: calc((100% - 2048px) / 2);
+    }
+  }
+  &.size-full, .size-full {
+    width: 100vw;
+    margin-left: calc(-50vw + 50%);
+  }
+  figure {
+    position: relative;
+  }
+}
 
+
+figure {
+  &.aligncenter img {margin: 0 auto}
+  &.alignright img {margin-left: auto;}
   a {
     display: block;
     @include hover {opacity: 0.75}

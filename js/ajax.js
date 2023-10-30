@@ -9,7 +9,7 @@ function load_posts_ajax(paged, category) {
         paged = 1;
     }
 
-    var ajax_content = $('.posts__container');
+    const ajax_content = $('.posts__container');
 
     $.ajax({
         type: 'POST',
@@ -41,14 +41,14 @@ $(document).ready(function () {
     'use strict';
 
     // ajax posts - filtering
-    var posts_filters = $('.posts__filters a'),
-        posts_dropdown = $('.posts__dropdown');
+    const posts_filters = $('.posts__filters a');
+    const posts_dropdown = $('.posts__dropdown');
 
     // desktop
     posts_filters.on('click', function () {
         $(this).parents('.posts__filtering').find('.show_box').addClass('is_loading');
 
-        var cat = $(this).attr('href');
+        const cat = $(this).attr('href');
 
         load_posts_ajax(1, cat);
 
@@ -61,7 +61,7 @@ $(document).ready(function () {
     });
     // desktop - hash catch
     posts_filters.each(function() {
-        var hash = $(this).attr('href');
+        const hash = $(this).attr('href');
         if (hash === window.location.hash) {
             $(this).click();
         }
@@ -71,7 +71,7 @@ $(document).ready(function () {
     posts_dropdown.on('change', function () {
         $(this).parents('.posts__filtering').find('.show_box').addClass('is_loading');
 
-        var cat = $(this).val();
+        const cat = $(this).val();
 
         load_posts_ajax(1, cat);
 
@@ -79,9 +79,9 @@ $(document).ready(function () {
     });
     // mobile - hash catch
     posts_dropdown.find('option').each(function() {
-        var hash = $(this).val();
+        const hash = $(this).val();
         if (hash === window.location.hash) {
-            var ti = $(this).index();
+            const ti = $(this).index();
             posts_dropdown.prop('selectedIndex', ti).selectric('refresh');
         }
     });
@@ -90,8 +90,8 @@ $(document).ready(function () {
     $(this).on('click', '.load_more__posts', function () {
         $(this).parent().next().find('.show_box').addClass('is_loading');
 
-        var pg = $(this).attr('data-href'),
-            cat = $(this).attr('data-cat');
+        const pg = $(this).attr('data-href');
+        const cat = $(this).attr('data-cat');
 
         load_posts_ajax(pg === 1 ? 2 : pg, cat);
 
