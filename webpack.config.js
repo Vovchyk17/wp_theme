@@ -1,3 +1,11 @@
+/*
+1. update theme name in package.json
+2. uncomment styles import in scripts.js
+3. run in terminal: npm install
+4. run in terminal: npm run build
+5. edit assets.php
+*/
+
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
@@ -67,10 +75,3 @@ module.exports = {
         })
     ]
 };
-
-// update theme name in package.json
-// uncomment styles import in scripts.js
-// run in terminal: npm install
-// run in terminal: npm run build
-// edit assets.php
-
