@@ -5,13 +5,16 @@ const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 
 module.exports = {
-    entry: [
-        './js/libs/common-libs.js',
-        './js/scripts.js'
-    ],
+    entry: {
+        'main': [
+            './js/libs/common-libs.js',
+            './js/scripts.js',
+        ],
+        // 'ajax': './js/ajax.js',
+    },
     output: {
-        filename: 'dist/main.min.js',
-        path: path.resolve(__dirname)
+        filename: 'dist/[name].min.js',
+        path: path.resolve(__dirname),
     },
     module: {
         rules: [
@@ -52,7 +55,7 @@ module.exports = {
         minimize: true,
         minimizer: [
             new CssMinimizerPlugin(),
-            new TerserPlugin()
+            new TerserPlugin(),
         ]
     },
     plugins: [
@@ -60,7 +63,7 @@ module.exports = {
             cleanOnceBeforeBuildPatterns: ['dist/**/*'],
         }),
         new MiniCssExtractPlugin({
-            filename: 'dist/main.min.css'
+            filename: 'dist/[name].min.css'
         })
     ]
 };
