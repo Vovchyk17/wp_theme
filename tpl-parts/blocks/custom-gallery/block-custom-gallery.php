@@ -1,10 +1,4 @@
 <?php
-/**
- * Block Name: Custom Gallery
- *
- * This is the template that displays the custom gallery block.
- */
-
 // set a preview for a block
 if( !empty( $block['data']['__is_preview'] ) ) : ?>
     <figure>

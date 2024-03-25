@@ -48,10 +48,3 @@ function tpl_style( $file_names, $sub_path =  '', $version = null ) {
 		wp_enqueue_style( $file_name, get_stylesheet_directory_uri() . '/style/templates/' . $sub_path . '' . $file_name . '.css', null, $version );
 	}
 }
-
-
-// disable Gutenberg style on Front
-function wps_deregister_styles() {
-	wp_dequeue_style( 'wp-block-library' );
-}
-add_action( 'wp_print_styles', 'wps_deregister_styles', 100 );

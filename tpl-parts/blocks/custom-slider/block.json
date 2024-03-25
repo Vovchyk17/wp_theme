@@ -1,0 +1,17 @@
+{
+  "name": "acf/slider",
+  "title": "Slider",
+  "description": "A custom slider block.",
+  "category": "media",
+  "keywords": [
+    "slider",
+    "image",
+    "carousel"
+  ],
+  "icon": "format-gallery",
+  "apiVersion": 2,
+  "acf": {
+    "renderTemplate": "./block-custom-slider.php",
+    "mode": "edit"
+  }
+}

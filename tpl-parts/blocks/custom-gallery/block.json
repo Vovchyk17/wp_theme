@@ -1,0 +1,16 @@
+{
+  "name": "acf/gallery",
+  "title": "Custom Gallery",
+  "description": "A custom gallery block.",
+  "category": "media",
+  "keywords": [
+    "gallery",
+    "image"
+  ],
+  "icon": "format-gallery",
+  "apiVersion": 2,
+  "acf": {
+    "renderTemplate": "./block-custom-gallery.php",
+    "mode": "edit"
+  }
+}

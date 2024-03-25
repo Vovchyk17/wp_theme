@@ -16,89 +16,11 @@ function my_acf_init() {
 	// g-map API key
 	acf_update_setting('google_api_key', 'AIzaSyAO77hGcvxmsvOn1RSjDFQMI4YUnW89MDo');
 
-	// check if function exists
 	// Gutenberg blocks
-	if( function_exists('acf_register_block_type') ) {
-
-		// register a testimonial block
-		acf_register_block_type(array(
-			'name'            => 'accordion',
-			'title'           => __( 'Accordion' ),
-			'description'     => __( 'Use this block to have an accordion block.' ),
-			'render_template' => get_template_directory() . '/tpl-parts/blocks/block-accordion.php',
-			'category'        => 'formatting',
-			'icon'            => 'editor-table',
-			'keywords'        => array( 'accordion', 'group', 'text' ),
-			'mode'            => 'edit',
-			'example'         => array(
-				'attributes' => array(
-					'mode' => 'preview',
-					'data' => array(
-						'__is_preview' => true
-					)
-				)
-			)
-		));
-
-		// register custom video block
-		acf_register_block_type(array(
-			'name'            => 'custom-video',
-			'title'           => __( 'Custom Video' ),
-			'description'     => __( 'Use this block to have the custom video block.' ),
-			'render_template' => get_template_directory() . '/tpl-parts/blocks/block-custom-video.php',
-			'category'        => 'media',
-			'icon'            => 'embed-video',
-			'keywords'        => array( 'video', 'embed', 'custom' ),
-			'mode'            => 'edit',
-			'example'         => array(
-				'attributes' => array(
-					'mode' => 'preview',
-					'data' => array(
-						'__is_preview' => true
-					)
-				)
-			)
-		));
-
-		// register a custom gallery block
-		acf_register_block_type(array(
-			'name'            => 'custom-gallery',
-			'title'           => __( 'Custom Gallery' ),
-			'description'     => __( 'Use this block to have the custom gallery block.' ),
-			'render_template' => get_template_directory() . '/tpl-parts/blocks/block-custom-gallery.php',
-			'category'        => 'media',
-			'icon'            => 'layout',
-			'keywords'        => array( 'gallery', 'image', 'custom' ),
-			'mode'            => 'edit',
-			'example'         => array(
-				'attributes' => array(
-					'mode' => 'preview',
-					'data' => array(
-						'__is_preview' => true
-					)
-				)
-			)
-		));
-
-		// register a custom slider block
-		acf_register_block_type(array(
-			'name'            => 'custom-slider',
-			'title'           => __( 'Custom Slider' ),
-			'description'     => __( 'Use this block to have the custom slider block.' ),
-			'render_template' => get_template_directory() . '/tpl-parts/blocks/block-custom-slider.php',
-			'category'        => 'media',
-			'icon'            => 'images-alt2',
-			'keywords'        => array( 'slider', 'image', 'custom' ),
-			'mode'            => 'edit',
-			'example'         => array(
-				'attributes' => array(
-					'mode' => 'preview',
-					'data' => array(
-						'__is_preview' => true
-					)
-				)
-			)
-		));
+	if( function_exists('register_block_type') ) {
+		register_block_type(get_template_directory() . "/tpl-parts/blocks/accordion/block.json");
+		register_block_type(get_template_directory() . "/tpl-parts/blocks/custom-gallery/block.json");
+		register_block_type(get_template_directory() . "/tpl-parts/blocks/custom-slider/block.json");
 	}
 }
 add_action('acf/init', 'my_acf_init');
