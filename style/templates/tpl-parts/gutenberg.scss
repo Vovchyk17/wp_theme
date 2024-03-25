@@ -1,9 +1,14 @@
 @import '../../import/import';
 
 // default Gutenberg blocks
-.gutenberg .content > *:not(p):not(.wp-block-heading) {
+.gutenberg .content > *:not(p):not(.wp-block-heading):not(.wp-block-spacer):not(.wp-block-separator) {
     margin-bottom: 30px;
     @include rwd-min(768) {margin-bottom: 60px}
+}
+
+.wp-block-separator {
+  margin: 30px 0;
+  @include rwd-min(768) {margin: 60px 0}
 }
 
 .wp-block-table table {
