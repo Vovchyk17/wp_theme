@@ -1,0 +1,15 @@
+{
+  "name": "acf/accordion",
+  "title": "Accordion",
+  "description": "A custom accordion block.",
+  "category": "formatting",
+  "keywords": [
+    "accordion"
+  ],
+  "icon": "sort",
+  "apiVersion": 2,
+  "acf": {
+    "renderTemplate": "./block-accordion.php",
+    "mode": "preview"
+  }
+}

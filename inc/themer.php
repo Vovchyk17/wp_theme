@@ -126,10 +126,9 @@ function wpa_body_classes( $classes ){
 		preg_match( "/Chrome\/(\d.\d)/si", $browser, $matches);
 		@$classesh_version = 'ch' . str_replace( '.', '-', $matches[1] );
 		$classes[] = $classesh_version;
-	} elseif ( preg_match( "/Safari/", $browser ) ) {
+	} elseif (preg_match("/Safari/", $browser) && preg_match("/Version\/(\d+\.\d+)/si", $browser, $matches)) {
+		$sf_version = 'sf' . str_replace('.', '-', $matches[1]);
 		$classes[] = 'safari';
-		preg_match( "/Version\/(\d.\d)/si", $browser, $matches);
-		$sf_version = 'sf' . str_replace( '.', '-', $matches[1] );
 		$classes[] = $sf_version;
 	} elseif ( preg_match( "/Opera/", $browser ) ) {
 		$classes[] = 'opera';
