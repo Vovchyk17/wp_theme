@@ -2,10 +2,6 @@
 /*jshint multistr: true, latedef: nofunc */
 /*global jQuery, $, Swiper*/
 
-// import '../style/fonts.css'
-// import '../style/libs/common-libs.css'
-// import '../style/style.css'
-
 // control :focus when using mouse/keyboard
 document.body.addEventListener('mousedown', function() {
     document.body.classList.add('is_using_mouse');

@@ -27,8 +27,9 @@ function tt_add_jscss() {
 	// uncomment next line and comment all below it on deploy after gulp run
 	/*wp_enqueue_style('main', get_stylesheet_directory_uri(). '/dist/main.min.css', null, '1.0' );*/
 	/*wp_enqueue_style('aos', get_stylesheet_directory_uri(). '/style/libs/aos.css', null, null );*/
-	wp_enqueue_style('fonts', get_stylesheet_directory_uri(). '/style/fonts.css', null, null );
 	wp_enqueue_style('libs', get_stylesheet_directory_uri(). '/style/libs/common-libs.css', null, null );
+
+	wp_enqueue_style('fonts', get_stylesheet_directory_uri(). '/style/fonts.css', null, null );
 	wp_enqueue_style('style', get_stylesheet_directory_uri(). '/style/style.css', null, null );
 }
 add_action('wp_enqueue_scripts', 'tt_add_jscss');
