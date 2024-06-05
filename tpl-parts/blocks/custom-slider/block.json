@@ -11,7 +11,7 @@
   "icon": "format-gallery",
   "apiVersion": 2,
   "acf": {
-    "renderTemplate": "./block-custom-gallery.php",
-    "mode": "preview"
+    "renderTemplate": "./block-custom-slider.php",
+    "mode": "edit"
   }
 }

@@ -19,6 +19,8 @@ function my_acf_init() {
 	// Gutenberg blocks
 	if( function_exists('register_block_type') ) {
 		register_block_type(get_template_directory() . "/tpl-parts/blocks/accordion/block.json");
+		register_block_type(get_template_directory() . "/tpl-parts/blocks/custom-gallery/block.json");
+		register_block_type(get_template_directory() . "/tpl-parts/blocks/custom-slider/block.json");
 	}
 }
 add_action('acf/init', 'my_acf_init');

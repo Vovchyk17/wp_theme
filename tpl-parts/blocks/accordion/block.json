@@ -10,6 +10,6 @@
   "apiVersion": 2,
   "acf": {
     "renderTemplate": "./block-accordion.php",
-    "mode": "preview"
+    "mode": "edit"
   }
 }

@@ -31,6 +31,7 @@ require_once('plugins/duplicator.php');
 // ACF settings
 require_once('acf.php');
 
+
 // custom post types & taxonomies
 //require_once('cpt.php');
 
@@ -281,3 +282,88 @@ function custom_wpkses_post_tags( $tags, $context ) {
 }
 
 add_filter( 'wp_kses_allowed_html', 'custom_wpkses_post_tags', 10, 2 );
+
+/*Load separate Gutenberg blocks*/
+add_filter( 'should_load_separate_core_block_assets', '__return_true' );
+
+/*Disable Patterns*/
+add_action( 'after_setup_theme', function() {
+	remove_theme_support( 'core-block-patterns' );
+} );
+
+/*Disable Gutenberg blocks*/
+function gutenberg_blacklist_blocks( $allowed_blocks ) {
+	// Blocks to blacklist with their slugs
+	$blocks_to_blacklist = array(
+		'core/archives',
+		'core/calendar',
+		'core/comments',
+		'core/post-author-name',
+		'core/nextpage',
+		'core/pullquote',
+		'core/footnotes',
+		'core/verse',
+		'core/details',
+		'core/more',
+		'core/categories',
+		'core/latest-comments',
+		'core/latest-posts',
+		'core/page-list',
+		'core/rss',
+		'core/search',
+		'core/social-links',
+		'core/tag-cloud',
+		'core/navigation',
+		'core/site-logo',
+		'core/site-title',
+		'core/site-tagline',
+		'core/query',
+		'core/post-navigation-link',
+		'core/post-template',
+		'core/query-pagination',
+		'core/query-pagination-next',
+		'core/query-pagination-numbers',
+		'core/query-pagination-previous',
+		'core/query-no-results',
+		'core/read-more',
+		'core/posts-list',
+		'core/avatar',
+		'core/post-title',
+		'core/post-excerpt',
+		'core/post-featured-image',
+		'core/post-content',
+		'core/post-author',
+		'core/post-date',
+		'core/post-terms',
+		'core/read-more',
+		'core/comments',
+		'core/comment-author-name',
+		'core/comment-content',
+		'core/comment-date',
+		'core/comment-edit-link',
+		'core/comment-reply-link',
+		'core/comment-template',
+		'core/comments-title',
+		'core/comments-pagination',
+		'core/comments-pagination-next',
+		'core/comments-pagination-numbers',
+		'core/comments-pagination-previous',
+		'core/post-comments-form',
+		'core/loginout',
+		'core/term-description',
+		'core/query-title',
+		'core/post-author-biography'
+	);
+
+	// get all the registered blocks
+	$blocks = WP_Block_Type_Registry::get_instance()->get_all_registered();
+
+	// disable the blocks specified in $blocks_to_blacklist
+	foreach ($blocks_to_blacklist as $block_slug) {
+		unset($blocks[$block_slug]);
+	}
+
+	// return the new list of allowed blocks
+	return array_keys($blocks);
+}
+add_filter( 'allowed_block_types_all', 'gutenberg_blacklist_blocks' );

@@ -180,9 +180,9 @@ $(document).ready(function() {
 
 
     // wrap tables for responsive design
-    if($('.content table').length > 0) {
+  /*  if($('.content table').length > 0) {
         $('.content table').wrap('<div class="table_wrapper"></div>');
-    }
+    }*/
     
 });
 
