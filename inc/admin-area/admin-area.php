@@ -59,15 +59,6 @@ function wpa_remove_dashboard_widgets () {
 }
 add_action('wp_dashboard_setup', 'wpa_remove_dashboard_widgets');
 
-// dashboard - disable fullscreen mode when editing page/post
-/*if ( is_admin() ) {
-	function jba_disable_editor_fullscreen_by_default() {
-		$script = "window.onload = function() { const isFullscreenMode = wp.data.select( 'core/edit-post' ).isFeatureActive( 'fullscreenMode' ); if ( isFullscreenMode ) { wp.data.dispatch( 'core/edit-post' ).toggleFeature( 'fullscreenMode' ); } }";
-		wp_add_inline_script( 'wp-blocks', $script );
-	}
-	add_action( 'enqueue_block_editor_assets', 'jba_disable_editor_fullscreen_by_default' );
-}*/
-
 
 // general - disable comments for media
 function filter_media_comment_status( $open, $post_id ) {
@@ -106,6 +97,3 @@ add_filter( 'render_block', function( $block_content, $block ) {
 	}
 	return wp_render_layout_support_flag( $block_content, $block );
 }, 10, 2 );
-
-// general - remove admin bar on front end
-/*add_filter( 'show_admin_bar', '__return_false' );*/

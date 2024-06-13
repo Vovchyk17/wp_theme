@@ -1,11 +1,12 @@
 // style guide
 
 .button,
-.wp-block-button__link {
-  @extend %ani;
+.wp-block-button__link,
+.wp-block-file__button {
+  transition: all 0.3s ease;
   display: inline-block;
   vertical-align: middle;
-  font: 500 13px/24px $ff;
+  font: 400 14px/24px $ff;
   letter-spacing: 0.03em;
   text-transform: uppercase;
   color: #fff;
@@ -19,7 +20,6 @@
     padding: 10px 22px;
   }
   &.is_full {width: 100%}
-  & + & {margin-left: 20px}
   @include hover {background-color: $cl}
 }
 
@@ -28,17 +28,15 @@
   &.is_full {
     .wp-block-button__link {width: 100%}
   }
-  & + & {margin-left: 20px}
 }
 
 .wp-block-buttons {
-  padding-bottom: 30px;
+  margin-bottom: 30px;
   &.is-content-justification-center {text-align: center}
   &.is-content-justification-right {text-align: right}
 }
 
 .link {
-  font-weight: 700;
   color: $cl;
   box-shadow: 0 1px;
   @include hover {box-shadow: 0 0}
@@ -105,43 +103,39 @@ small, sub {
   font-weight: 400;
 }
 
-em, i {font-weight: 500}
+em, i {font-weight: 400}
 
-.wp-block-image {
-  position: relative;
-  margin: 56px 0;
-  @include rwd-min(1025) {
-    margin: 80px 0;
-  }
-  &.size-1536x1536, .size-1536x1536 {
-    width: 100vw;
-    margin-left: calc(-50vw + 50%);
-    @include rwd-min(1536) {
-      width: 1536px;
-      margin-left: calc((100% - 1536px) / 2);
-    }
-  }
-  &.size-2048x2048, .size-2048x2048 {
-    width: 100vw;
-    margin-left: calc(-50vw + 50%);
-    @include rwd-min(2048) {
-      width: 2048px;
-      margin-left: calc((100% - 2048px) / 2);
-    }
-  }
-  &.size-full, .size-full {
-    width: 100vw;
-    margin-left: calc(-50vw + 50%);
-  }
-  figure {
-    position: relative;
-  }
-}
+//.wp-block-image {
+//  position: relative;
+//  &.size-1536x1536, .size-1536x1536 {
+//    width: 100vw;
+//    margin-left: calc(-50vw + 50%);
+//    @include rwd-min(1536) {
+//      width: 1536px;
+//      margin-left: calc((100% - 1536px) / 2);
+//    }
+//  }
+//  &.size-2048x2048, .size-2048x2048 {
+//    width: 100vw;
+//    margin-left: calc(-50vw + 50%);
+//    @include rwd-min(2048) {
+//      width: 2048px;
+//      margin-left: calc((100% - 2048px) / 2);
+//    }
+//  }
+//  &.size-full, .size-full {
+//    width: calc(100vw - 8px);
+//    margin-left: calc(-50vw + 50%);
+//  }
+//  figure {
+//    position: relative;
+//  }
+//}
 
 
 figure {
-  &.aligncenter img {margin: 0 auto}
-  &.alignright img {margin-left: auto;}
+  //&.aligncenter img {margin: 0 auto}
+  //&.alignright img {margin-left: auto;}
   a {
     display: block;
     @include hover {opacity: 0.75}
@@ -192,27 +186,32 @@ hr {
     a:not(.button) {@extend .link}
   }
 
-  li:not(:last-child) {margin-bottom: 15px}
-
-  ul:not(.blocks-gallery-grid), ol {margin-bottom: 30px}
+  ul:not(.blocks-gallery-grid), ol {
+    .content *:not(.selectric-items) & {
+      margin-bottom: 30px;
+      li:not(:last-child) {margin-bottom: 15px}
+    }
+  }
 
   ul:not(.blocks-gallery-grid) {
-    li {
-      padding-left: 18px;
-      position: relative;
+    .content *:not(.selectric-items) &  {
+      li {
+        padding-left: 18px;
+        position: relative;
 
-      &:before {
-        content: '';
-        position: absolute;
-        left: 0;
-        top: 9px;
-        width: 6px;
-        height: 6px;
-        border-radius: 50%;
-        background-color: $cl;
+        &:before {
+          content: '';
+          position: absolute;
+          left: 0;
+          top: 9px;
+          width: 6px;
+          height: 6px;
+          border-radius: 50%;
+          background-color: $cl;
+        }
+
+        & > ul {padding: 15px 0 0 20px}
       }
-
-      & > ul {padding: 15px 0 0 20px}
     }
   }
 
@@ -282,7 +281,7 @@ hr {
 
 // icons
 .circle_arrow {
-  @extend %ani;
+  transition: all 0.3s ease;
   display: inline-block;
   width: 48px;
   height: 48px;

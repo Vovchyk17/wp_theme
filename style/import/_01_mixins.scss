@@ -1,22 +1,4 @@
 // mixins
-
-/// strips the unit from a number
-@function strip-units($value) {
-  @return ($value / ($value * 0 + 1));
-}
-// convert pixels to rems -> for a relational value of 12px write rem(12)
-// assumes $fb is the font-size of <html>
-@function rem($pxval) {
-  @if not unitless($pxval) {
-    $pxval: strip-units($pxval);
-  }
-  $base: $fb;
-  @if not unitless($base) {
-    $base: strip-units($base);
-  }
-  @return ($pxval / $base) * 1rem;
-}
-
 @mixin rwd-max($px) {
   $min-width: #{$px}px;
   @media screen and (max-width: $min-width) {@content}
@@ -59,11 +41,6 @@
   }
 }
 
-@mixin gradient($angle: 90deg, $colors...) {
-  background-image: -webkit-linear-gradient(90 - $angle + 360, $colors);
-  background-image: linear-gradient($angle, $colors);
-}
-
 @mixin center($horizontal: true, $vertical: true) {
   position: absolute;
   @if ($horizontal and $vertical) {
@@ -76,47 +53,6 @@
   } @else if ($vertical) {
     top: 50%;
     transform: translate(0, -50%);
-  }
-}
-
-@mixin triangle ($width:12px, $height:10px, $cl:#000, $direction: top) {
-  position: absolute;
-  content: '';
-  height: 0;
-  width: 0;
-
-  @if $direction == top {
-    border-top: 0;
-    border-left: $width solid transparent;
-    border-right: $width solid transparent;
-    border-bottom: $height solid $cl;
-    top: -$height;
-    left: 50%;
-    transform: translateX(-50%);
-  } @else if $direction == right {
-    border-right: 0;
-    border-top: $width solid transparent;
-    border-bottom: $width solid transparent;
-    border-left: $height solid $cl;
-    right: -$height;
-    top: 50%;
-    transform: translateY(-50%);
-  } @else if $direction == bottom {
-    border-bottom: 0;
-    border-left: $width solid transparent;
-    border-right: $width solid transparent;
-    border-top: $height solid $cl;
-    bottom: -$height;
-    left: 50%;
-    transform: translateX(-50%);
-  } @else {
-    border-left: 0;
-    border-top: $width solid transparent;
-    border-bottom: $width solid transparent;
-    border-right: $height solid $cl;
-    left: -$height;
-    top: 50%;
-    transform: translateY(-50%);
   }
 }
 

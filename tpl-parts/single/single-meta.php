@@ -1,4 +1,4 @@
-<div class="single_post__meta container is_8">
+<div class="single_post__meta container">
     <div class="single_post__meta__inner">
         <div class="author_name">Author:
             <a href="<?php echo esc_url(get_author_posts_url( get_the_author_meta( 'ID' ), get_the_author_meta( 'user_nicename' ) )); ?>"><?php the_author(); ?></a>

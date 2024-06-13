@@ -1,0 +1,9 @@
+@import '../../../style/import/import';
+
+.block__custom_slider {
+  &_controls {
+    padding-top: 30px;
+    .sw_prev {margin-right: 10px}
+    .sw_next {margin-left: 10px}
+  }
+}

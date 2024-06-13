@@ -2,16 +2,11 @@
 
 .single_post {
   &__meta {
-    padding-bottom: 20px;
+    margin-bottom: 20px;
 
     .shrs {margin-top: 20px}
   }
 
   &__thumb {margin-bottom: 30px}
 
-  &__content {
-    padding-bottom: 80px;
-
-    .content {@extend %last_no_spacing}
-  }
 }

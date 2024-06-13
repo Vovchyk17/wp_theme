@@ -40,7 +40,7 @@ $selectric-font-size:       14px !default;                                      
     @include center(false, true);
     right: 21px;
     &:after, &:before {
-      @extend %ani;
+      transition: all 0.3s ease;
       content: '';
       position: absolute;
       top: 50%;
@@ -153,7 +153,7 @@ $selectric-font-size:       14px !default;                                      
   }
 
   li {
-    @extend %ani;
+    transition: all 0.3s ease;
     display: block;
     padding: 10px;
     color: $tx;

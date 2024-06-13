@@ -18,7 +18,7 @@
 </head>
 
 <body <?php body_class(); ?> data-a="<?php echo esc_url( admin_url( 'admin-ajax.php' ) ); ?>">
-<a href="#main" class="button skip_to_content">Skip to content</a>
+<a href="#main" class="button skip_to_content"><?php echo esc_html('Skip to content'); ?></a>
 
 <header>
 	<div class="header__container container flex">

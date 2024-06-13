@@ -18,7 +18,7 @@ if ( $accordion ) :
                     <span class="circle_arrow is_down"></span>
                 </div>
 
-                <div class="block__accordion_content" aria-hidden="true" role="region">
+                <div class="block__accordion_content last_no_spacing" aria-hidden="true" role="region">
                     <?php echo wp_kses_post( $row['content'] ); ?>
                 </div>
             </div>

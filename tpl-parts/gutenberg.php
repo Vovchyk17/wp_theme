@@ -17,7 +17,6 @@ $container_class = $container_class > 0 ? ' ' . $container_class : '';
                 </div>
             </div>
         </div>
-
 		<?php tpl_style( 'gutenberg', 'tpl-parts' ); ?>
 	<?php endif;
 endwhile; endif; ?>

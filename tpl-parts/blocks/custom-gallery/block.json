@@ -10,7 +10,7 @@
   "icon": "format-gallery",
   "apiVersion": 2,
   "acf": {
-    "renderTemplate": "./block-custom-gallery.php",
+    "renderTemplate": "./block-gallery.php",
     "mode": "edit"
   }
 }

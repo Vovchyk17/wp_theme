@@ -8,7 +8,7 @@ $load_yellow: $cl;
 $load_width: 30px;
 
 .show_box {
-  @extend %ani;
+  transition: all 0.3s ease;
   @include center(true, false);
   bottom: 0;
   display: inline-block;
