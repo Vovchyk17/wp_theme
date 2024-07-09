@@ -19,7 +19,7 @@ if ( !empty( $cat_terms ) && ! is_wp_error( $cat_terms ) ) : ?>
 			<?php endforeach; ?>
         </ul>
 
-        <div class="mob_show">
+        <div class="">
             <select id="select__<?php echo $tax; ?>" class="posts__dropdown dropdown__taxonomy">
                 <option value="*" data-name="<?php echo $tax; ?>"><?php echo $label; ?></option>
 				<?php foreach ( $cat_terms as $cat_term ) : ?>

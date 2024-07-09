@@ -26,6 +26,7 @@ module.exports = {
             './js/scripts.js',
             ...(isProduction ? ['./style/fonts.css', './style/style.css'] : [])
         ],
+        'ajax': './js/ajax.js',
     },
     output: {
         filename: 'dist/[name].min.js',

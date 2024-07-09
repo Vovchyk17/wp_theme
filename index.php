@@ -13,7 +13,7 @@ get_template_part( 'tpl-parts/top-panels/top-panel', 'default', array( 'title' =
 
         <div class="posts__container">
             <?php if ( function_exists( 'load_posts_ajax') ) :
-	            load_posts_ajax();
+	            echo load_posts_ajax([ 'next' => 1]);
             else :
 	            if (have_posts()) : while (have_posts()) : the_post();
 		            get_template_part( 'tpl-parts/post-items/post', 'item' );

@@ -1,26 +1,28 @@
 <?php
 
 // ajax posts load
-function load_posts_ajax( $paged = 1 ) {
+function load_posts_ajax( $filter_data = null ) {
 	extract( $_POST );
 
-	global $post;
-
 	$tax_query = array();
+	$paged       = $filter_data['next'];
 
-	if ( $category != "*" && $category != null ) :
-		$tax_query = array_merge( $tax_query, array(
-			'relation' => 'AND',
-			array(
-				'taxonomy' => 'category',
-				'field'    => 'slug',
-				'terms'    => array( $category )
-			),
-		) );
-	endif;
+	if ( isset( $filter_data['tax'] ) ) {
+		$tax_query = array( 'relation' => 'AND' );
+
+		foreach ( $filter_data['tax'] as $key => $tax ) :
+			$temp_args = [
+				'taxonomy' => $key,
+				'terms'    => $tax,
+				'field'    => 'id',
+				'operator' => 'IN'
+			];
+			array_push( $tax_query, $temp_args );
+		endforeach;
+	}
 
 	$args = array(
-		'posts_per_page' => 10,
+		'posts_per_page' => 6,
 		'post_type'      => 'post',
 		'post_status'    => 'publish',
 		'paged'          => $paged,
@@ -31,17 +33,22 @@ function load_posts_ajax( $paged = 1 ) {
 
 	$num_pages = $posts_query->max_num_pages;
 
+	if ( $num_pages <= $paged ) {
+		$filter_data['next'] = 1;
+	} else {
+		$filter_data['next'] = $paged + 1;
+	}
+
+	ob_start();
+
 	if ( $posts_query->have_posts() ) : while ( $posts_query->have_posts() ) : $posts_query->the_post();
-
 		get_template_part( 'tpl-parts/post-items/post', 'item' );
-
 	endwhile;
 
 		if ( $num_pages != $paged ) :
 			echo '<div class="load_more_holder">
                       <a class="button load_more__posts" 
-                         data-href="' . wp_kses_post( ( $paged + 1 ) ) . '" 
-                         data-cat="' . esc_html( $category ) . '"
+                         data-next_page="' . htmlspecialchars( json_encode( $filter_data ), ENT_QUOTES ) . '"
                          aria-label="Load page ' . wp_kses_post( ( $paged + 1 ) ) . '"
                          href="javascript:;">' . esc_html( "Load More" ) . '</a>
                   </div>
@@ -52,8 +59,16 @@ function load_posts_ajax( $paged = 1 ) {
 		echo '<div><h3 class="custom_coming_soon">' . esc_html( "Nothing found." ) . '</h3></div>';
 	endif;
 
+	$html = ob_get_clean();
+
 	if ( wp_doing_ajax() ) :
+		wp_send_json( [
+			'html'  => $html,
+			'paged' => $paged,
+		] );
 		wp_die();
+	else :
+		return $html;
 	endif;
 
 }
