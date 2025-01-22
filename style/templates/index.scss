@@ -1,29 +1,28 @@
 @import '../import/import';
-@import '../modules/00_selectric';
-@import '../modules/02_loader';
+@import '../modules/selectric';
 
 .posts {
   &__filters {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
     position: relative;
-    margin-bottom: 40px;
+    margin-bottom: 64px;
     &_desktop {
       display: flex;
       flex-wrap: wrap;
       gap: 24px;
     }
   }
-  &__container {
-    display: grid;
-    grid-template-columns: repeat(1, 1fr);
-    gap: 24px;
-    @include rwd-range(1024, 540) {
-      grid-template-columns: repeat(2, 1fr);
-    }
-    @include rwd-min(1025) {
-      grid-template-columns: repeat(3, 1fr);
-    }
-    .loader_holder {
-      grid-column: 1 / -1;
-    }
+}
+
+.form_search_ajax {
+  position: relative;
+  input[type='text'] {
+    padding-right: 40px !important;
+  }
+  button {
+    @include center(false, true);
+    right: 20px;
   }
 }

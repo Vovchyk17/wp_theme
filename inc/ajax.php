@@ -4,8 +4,11 @@
 function load_posts_ajax( $filter_data = null ) {
 	extract( $_POST );
 
-	$tax_query = array();
-	$paged       = $filter_data['next'];
+	$tax_query      = array();
+	$date_query     = array();
+	$posts_per_page = $filter_data['posts_per_page'] ?: 9;
+	$paged          = $filter_data['next'];
+	$author         = $filter_data['author'] ?? null;
 
 	if ( isset( $filter_data['tax'] ) ) {
 		$tax_query = array( 'relation' => 'AND' );
@@ -21,23 +24,49 @@ function load_posts_ajax( $filter_data = null ) {
 		endforeach;
 	}
 
+	if ( isset( $filter_data['date'] ) ) {
+		foreach ( $filter_data['date'] as $date ) :
+			$date_arr  = explode( '-', $date );
+			$year      = intval( $date_arr[0] );
+			$temp_args = [
+				'year' => $year,
+			];
+			array_push( $date_query, $temp_args );
+		endforeach;
+	}
+
+	/*Uncomment function below if you need to search by post title only. Part 1 */
+	/*function title_filter( $where, &$wp_query ) {
+		global $wpdb;
+		if ( $search_term = $wp_query->get( 's' ) ) {
+			$where .= ' AND ' . $wpdb->posts . '.post_title LIKE \'%' . $wpdb->esc_like( $search_term ) . '%\'';
+		}
+		return $where;
+	}
+	add_filter( 'posts_where', 'title_filter', 10, 2 );*/
+
 	$args = array(
-		'posts_per_page' => 6,
+		'posts_per_page' => $posts_per_page,
 		'post_type'      => 'post',
 		'post_status'    => 'publish',
 		'paged'          => $paged,
-		'tax_query'      => $tax_query
+		'tax_query'      => $tax_query,
+		'date_query'     => $date_query,
+		's'              => $filter_data['s'] ?? ''
 	);
+
+	if ( $author ) {
+		$args['author__in'] = $author;
+	}
 
 	$posts_query = new WP_Query( $args );
 
+	/*Uncomment function below if you need to search by post title only. Part 2 */
+	/*remove_filter( 'posts_where', 'title_filter', 10 );*/
+
 	$num_pages = $posts_query->max_num_pages;
 
-	if ( $num_pages <= $paged ) {
-		$filter_data['next'] = 1;
-	} else {
-		$filter_data['next'] = $paged + 1;
-	}
+	$filter_data['next'] = ( $num_pages <= $paged ) ? 1 : $paged + 1;
 
 	ob_start();
 
@@ -56,7 +85,7 @@ function load_posts_ajax( $filter_data = null ) {
 		endif;
 
 	else :
-		echo '<div><h3 class="custom_coming_soon">' . esc_html( "Nothing found." ) . '</h3></div>';
+		echo '<div><h3 class="custom_coming_soon">' . esc_html( "No results." ) . '</h3></div>';
 	endif;
 
 	$html = ob_get_clean();

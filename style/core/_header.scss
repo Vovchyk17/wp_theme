@@ -158,7 +158,7 @@ header {
 
             &:after, &:before {
               content: '';
-              transform: translate(-50%,-50%);
+              transform: translate(-50%, -50%);
               position: absolute;
               top: 50%;
               left: 50%;
@@ -177,8 +177,8 @@ header {
             }
 
             &.is_open {
-              &:after {transform: translate(-50%,-50%) rotate(180deg)}
-              &:before {transform: translate(-50%,-50%) rotate(90deg)}
+              &:after {transform: translate(-50%, -50%) rotate(180deg)}
+              &:before {transform: translate(-50%, -50%) rotate(90deg)}
             }
           }
 
@@ -209,8 +209,7 @@ header {
         top: 52px;
         min-width: 140px;
         padding: 15px 20px 7px;
-        background-color: #fff;
-        box-shadow: 0 6px 5px $shadow;
+        background-color: $tx;
         transform: translateY(5px);
         transition: all 0.3s ease;
         opacity: 0;
@@ -235,6 +234,10 @@ header {
 
       a {
         @include rwd-max(1024) {padding: 5px 0}
+        @include rwd-min(1025) {
+          color: #fff;
+          @include hover {color: $cl}
+        }
       }
     }
   }

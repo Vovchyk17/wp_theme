@@ -10,7 +10,7 @@ $load_width: 30px;
 .show_box {
   transition: all 0.3s ease;
   @include center(true, false);
-  bottom: 0;
+  top: calc(100% + 10px);
   display: inline-block;
   vertical-align: top;
   margin: 0;
@@ -101,4 +101,7 @@ $load_width: 30px;
   position: relative;
   z-index: 0;
   pointer-events: none;
+  .show_box {
+    @include center();
+  }
 }

@@ -11,5 +11,11 @@
   "acf": {
     "renderTemplate": "./block-accordion.php",
     "mode": "edit"
+  },
+  "attributes": {
+    "previewImage": {
+      "type": "string",
+      "default": "preview.png"
+    }
   }
 }

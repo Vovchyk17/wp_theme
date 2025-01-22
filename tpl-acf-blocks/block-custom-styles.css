@@ -4,7 +4,7 @@
 /* disabling Gutenberg's "Welcome Guide" popup! */
 /*.components-modal__screen-overlay {display: none !important}*/
 
-/* styles for custom Gutenberg blocks */
+/* styles for custom Gutenberg tpl-acf-blocks */
 
 /* default table */
 .wp-block-table table {

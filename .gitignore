@@ -70,7 +70,7 @@ npm-debug.log
 yarn-error.log
 
 # Webpack output directory
-dist/
+#dist/
 
 package-lock.json
 

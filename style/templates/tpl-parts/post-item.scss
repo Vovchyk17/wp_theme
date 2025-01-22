@@ -1,0 +1,44 @@
+@import '../../import/import';
+@import '../../modules/loader';
+
+$headings: 6;
+@for $start from 1 through $headings {
+  h#{$start}, .h#{$start} {
+    & + .posts__container {
+      margin-top: 32px;
+    }
+  }
+}
+
+.posts__container {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  row-gap: 48px;
+  column-gap: 24px;
+  @include rwd-range(1024, 540) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @include rwd-min(1025) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .loader_holder {
+    grid-column: 1 / -1;
+  }
+}
+
+.post_item {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  img {
+    height: 250px;
+    @include rwd-min(540) {
+      height: 350px;
+    }
+  }
+  &__meta {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+}

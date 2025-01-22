@@ -30,7 +30,7 @@ function tt_add_jscss() {
 		'in_footer' => true,
 		'strategy'  => 'defer'
 	) );
-	/*wp_enqueue_script('ajax', get_stylesheet_directory_uri(). '/js/ajax.js', array('libs'), null, true);*/
+	wp_enqueue_script('ajax', get_stylesheet_directory_uri(). '/js/ajax.js', array('libs'), null, true);
 
 	// uncomment next line and comment all below it on deploy after webpack build
 	/*wp_enqueue_style('main', get_stylesheet_directory_uri(). '/dist/main.min.css', null, '1.0' );*/
@@ -93,9 +93,9 @@ function is_block_used( $block_name ) {
 	return strpos( $post->post_content, $block_name ) !== false;
 }
 
-function enqueue_acf_block_styles() {
+function enqueue_acf_block_styles( $is_editor = false ) {
 	// Directory path to the CSS files
-	$css_directory = get_stylesheet_directory() . '/tpl-parts/blocks/';
+	$css_directory = get_stylesheet_directory() . '/tpl-acf-blocks/';
 	$css_files     = glob( $css_directory . '*/*.css' ); // Recursively get all CSS files in subdirectories
 
 	if ( ! empty( $css_files ) ) {
@@ -109,27 +109,45 @@ function enqueue_acf_block_styles() {
 				$file_version = null;
 				$handle       = 'acf-block-style-' . basename( $file, '.css' );
 
-				// Enqueue the style for the front-end
-				wp_enqueue_style(
-					$handle,
-					$file_url,
-					array(), // Dependencies, if any
-					$file_version
-				);
+				// Check if styles are for the editor or the front-end
+				if ( $is_editor ) {
+					wp_enqueue_style(
+						$handle . '-editor',
+						$file_url,
+						array(), // Dependencies, if any
+						$file_version
+					);
+				} else {
+					wp_enqueue_style(
+						$handle,
+						$file_url,
+						array(), // Dependencies, if any
+						$file_version
+					);
+				}
 			}
 		}
 	}
 }
 
-add_action( 'wp_enqueue_scripts', 'enqueue_acf_block_styles' ); // For front-end styles
+// Hook for front-end styles
+add_action( 'wp_enqueue_scripts', function() {
+	enqueue_acf_block_styles( false );
+} );
 
-function enqueue_acf_block_editor_styles() {
-	// Directory path to the CSS files
-	$css_directory = get_stylesheet_directory() . '/tpl-parts/blocks/';
-	$css_files     = glob( $css_directory . '*/*.css' ); // Recursively get all CSS files in subdirectories
+// Hook for editor styles
+add_action( 'enqueue_block_editor_assets', function() {
+	enqueue_acf_block_styles( true );
+} );
+/*Custom ACF Block enqueue styles - end*/
 
-	if ( ! empty( $css_files ) ) {
-		foreach ( $css_files as $file ) {
+function enqueue_acf_block_scripts() {
+	// Directory path to the JS files
+	$js_directory = get_stylesheet_directory() . '/tpl-acf-blocks/';
+	$js_files     = glob( $js_directory . '*/*.js' ); // Recursively get all JS files in subdirectories
+
+	if ( ! empty( $js_files ) ) {
+		foreach ( $js_files as $file ) {
 			$block_json = file_get_contents( dirname( $file ) . '/block.json' );
 			$block_data = json_decode( $block_json, true );
 			$block_name = $block_data['name'];
@@ -137,22 +155,21 @@ function enqueue_acf_block_editor_styles() {
 			if ( is_block_used( $block_name ) ) {
 				$file_url     = str_replace( get_stylesheet_directory(), get_stylesheet_directory_uri(), $file );
 				$file_version = null;
-				$handle       = 'acf-block-editor-style-' . basename( $file, '.css' );
+				$handle       = 'acf-block-script-' . basename( $file, '.js' );
 
-				// Enqueue the style for the editor
-				wp_enqueue_style(
+				// Enqueue the script for the front-end
+				wp_enqueue_script(
 					$handle,
 					$file_url,
 					array(), // Dependencies, if any
-					$file_version
+					$file_version,
+					true
 				);
 			}
 		}
 	}
 }
-
-add_action( 'enqueue_block_editor_assets', 'enqueue_acf_block_editor_styles' ); // For editor styles
-/*Custom ACF Block enqueue styles - end*/
+add_action( 'wp_enqueue_scripts', 'enqueue_acf_block_scripts' );
 
 // Defer no critical CSS files
 function defer_non_style_css_files($html, $handle, $href, $media) {

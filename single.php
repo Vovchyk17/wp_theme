@@ -8,6 +8,9 @@
 
 <?php get_template_part( 'tpl-parts/gutenberg', null ); ?>
 
+<?php get_template_part( 'tpl-parts/single/single', 'related' ); ?>
+
+
 <?php
 $file_name = basename( __FILE__, '.php' );
 tpl_style( $file_name );

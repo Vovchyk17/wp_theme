@@ -160,29 +160,10 @@ $(document).ready(function() {
         }
     });
 
-
-    // block - accordion
-    function acc_action(elem) {
-        const exp = elem.attr('aria-expanded');
-        const hid = elem.next().attr('aria-hidden');
-        (exp === 'false') ? elem.attr('aria-expanded', 'true') : elem.attr('aria-expanded', 'false');
-        (hid === 'true') ? elem.next().attr('aria-hidden', 'false') : elem.next().attr('aria-hidden', 'true');
-        elem.toggleClass('is_open').next().toggle();
-        elem.find('.circle_arrow').toggleClass('is_up').toggleClass('is_down');
-    }
-    $('.acc_title').on('click', function () {
-        acc_action($(this));
-    }).on('keyup', function (e) {
-        if (e.keyCode === 13) {
-            acc_action($(this));
-        }
-    });
-
-
     // wrap tables for responsive design
-  /*  if($('.content table').length > 0) {
+    if($('.content table').length > 0) {
         $('.content table').wrap('<div class="table_wrapper"></div>');
-    }*/
+    }
     
 });
 

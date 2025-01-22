@@ -1,4 +1,4 @@
-@import '../../../style/import/import';
+@import '../../style/import/import';
 
 .block__accordion {
     &_row {
@@ -14,10 +14,9 @@
       @include rwd-min(768) {padding: 23px 76px 23px 20px}
       @include hover {
         color: $cl;
-        .circle_arrow {box-shadow: inset 0 0 0 3px $cl}
       }
 
-      .circle_arrow {
+      &__icon{
         @include center(false, true);
         right: 10px;
         @include rwd-min(768) {right: 14px}

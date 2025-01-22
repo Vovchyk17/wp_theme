@@ -2,20 +2,28 @@
 .swiper-slide {box-sizing: border-box}
 
 .sw_controls {
-  @include center(false, true);
-  left: 0;
-  right: 0;
-  z-index: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  margin-top: 32px;
 }
 
 .sw_prev,
 .sw_next {
   transition: all 0.3s ease;
+  cursor: pointer;
   &.swiper-button-disabled {
     pointer-events: none;
     color: $border;
     opacity: 0.4;
     cursor: default;
+  }
+  &:before {
+    font-size: 24px;
+  }
+  @include hover {
+    color: $cl;
   }
 }
 

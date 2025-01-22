@@ -33,8 +33,12 @@ body {
 #main {
   flex: 1 0 auto;
   margin-top: 60px;
-  margin-bottom: 80px;
   @include rwd-min(1025) {margin-top: 80px}
+
+  > *:not(#search_field) {
+    margin-bottom: 80px;
+    @include rwd-min(1025) { margin-bottom: 120px; }
+  }
 }
 
 .container {
@@ -59,7 +63,7 @@ body {
 
 article, aside, figure, footer, header, nav, section {display: block}
 
-button {background: rgba(255, 255, 255, 0); border: medium none}
+button {background: rgba(255, 255, 255, 0); border: medium none; cursor: pointer;}
 
 ol {list-style-position: inside}
 
@@ -127,18 +131,18 @@ html::-webkit-scrollbar {
   @include rwd-min(1025) {width: 8px}
 }
 
-::-webkit-scrollbar-thumb {background-color: $cl}
+::-webkit-scrollbar-thumb {background-color: $tx}
 
 ::-webkit-scrollbar-track {background-color: #eaeaea}
 
-::-webkit-scrollbar-thumb:hover {background-color: darken($cl, 5%)}
+::-webkit-scrollbar-thumb:hover {background-color: darken($tx, 5%)}
 
-::-webkit-scrollbar-thumb:active {background-color: darken($cl, 5%)}
+::-webkit-scrollbar-thumb:active {background-color: darken($tx, 5%)}
 
 // custom scrollbar - firefox
 :root {
   scrollbar-width: thin;
-  scrollbar-color: $cl #eaeaea;
+  scrollbar-color: $tx #eaeaea;
 }
 
 // disable default focus
@@ -157,17 +161,3 @@ a[href], area[href], input:not([disabled]):not([type="hidden"]), select:not([dis
     &:focus-visible {outline: 0 none}
   }
 }
-
-// option to control colors with system color scheme
-//@media (prefers-color-scheme: dark) {
-//  body {
-//    color: #fff;
-//    background-color: $tx;
-//  }
-//}
-//@media (prefers-color-scheme: light) {
-//  body {
-//    color: $tx;
-//    background-color: #fff;
-//  }
-//}

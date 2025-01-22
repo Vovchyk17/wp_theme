@@ -1,5 +1,5 @@
 @import '../../style/import/import';
-@import '../modules/00_selectric';
+@import '../modules/selectric';
 
 // cf7
 $form-error: #ef3f3f;
@@ -96,19 +96,19 @@ div.wpcf7 {
       font: 400 16px $ff;
       color: $tx;
       padding: 0 15px;
-      border: 1px solid $cl;
+      border: 1px solid $tx;
       background-color: #fff;
       @include placeholder {color: $tx; opacity: 1}
 
       &:focus,
       &:focus-visible {
         outline: 0 none;
-        border-color: $form-success;
+        border-color: $cl;
       }
 
       .is_using_mouse & {
         &:focus,
-        &:focus-visible {border-color: $form-success}
+        &:focus-visible {border-color: $cl}
       }
     }
 

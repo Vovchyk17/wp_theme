@@ -1,11 +1,4 @@
 <?php
-// set a preview for a block
-if( !empty( $block['data']['__is_preview'] ) ) : ?>
-    <figure>
-        <img src="<?php echo esc_url(theme('tpl-parts/blocks/images/custom-gallery-placeholder.jpg')); ?>" alt="preview" style="max-width: 100%;">
-    </figure>
-<?php return; endif;
-
 // get fields
 $custom_gallery = get_field( 'custom_gallery' );
 if ( $custom_gallery ) :

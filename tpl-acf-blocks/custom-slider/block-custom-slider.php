@@ -2,13 +2,6 @@
 wp_enqueue_script( 'swiper', get_stylesheet_directory_uri() . '/js/libs/swiper.js', array( 'jquery' ), null, array('in_footer' => true, 'strategy' => 'defer' ) );
 wp_enqueue_style( 'swiper', get_stylesheet_directory_uri() . '/style/libs/swiper.css', null, null );
 
-// set a preview for a block
-if ( ! empty( $block['data']['__is_preview'] ) ) : ?>
-    <figure>
-        <img src="<?php echo esc_url( theme( 'tpl-parts/blocks/images/custom-slider-placeholder.png' ) ); ?>" alt="preview" style="max-width: 100%;">
-    </figure>
-<?php return; endif;
-
 // get fields
 $custom_slider = get_field( 'custom_slider' );
 if ( $custom_slider ) :
@@ -27,10 +20,10 @@ if ( $custom_slider ) :
             </div>
         </div>
 
-        <div class="block__custom_slider_controls flex_center">
-            <span class="sw_prev circle_arrow is_left"></span>
+        <div class="sw_controls">
+            <div class="sw_prev i_chevron_left"></div>
             <div class="sw_pagination"></div>
-            <span class="sw_next circle_arrow is_right"></span>
+            <div class="sw_next i_chevron_right"></div>
         </div>
     </div>
 <?php endif; ?>

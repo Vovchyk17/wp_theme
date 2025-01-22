@@ -70,3 +70,9 @@
     justify-content: space-between;
   }
 }
+
+//create a mixin for css grid columns when column start and end
+@mixin grid_columns($start, $end) {
+  grid-column-start: $start;
+  grid-column-end: $end;
+}

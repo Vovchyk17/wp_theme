@@ -1,9 +1,8 @@
-@import '00_reset';
-@import '01_classes';
-@import '02_ui_kit';
-@import '03_header';
-@import '04_footer';
-@import '05_top_panel';
-@import '06_so_me';
-@import '07_swiper';
-@import '08_fancybox';
+//recommended order: reset, ui_kit, header, footer, top_panel, so_me, swiper, fancybox
+@import 'reset';
+@import 'ui_kit';
+@import 'header';
+@import 'footer';
+@import 'top_panel';
+@import 'so_me';
+@import 'fancybox';

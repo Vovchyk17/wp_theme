@@ -18,17 +18,23 @@ function my_acf_init() {
 
 	// Gutenberg blocks
 	if( function_exists('register_block_type') ) {
-		register_block_type(get_template_directory() . "/tpl-parts/blocks/accordion/block.json");
-		register_block_type(get_template_directory() . "/tpl-parts/blocks/custom-gallery/block.json");
-		register_block_type(get_template_directory() . "/tpl-parts/blocks/custom-slider/block.json");
+		$blocks = glob(get_template_directory() . "/tpl-acf-blocks/*", GLOB_ONLYDIR);
+		foreach($blocks as $block) {
+			$block_name = basename($block);
+			register_block_type(get_template_directory() . "/tpl-acf-blocks/$block_name/block.json");
+		}
 	}
 }
 add_action('acf/init', 'my_acf_init');
 
-// add custom styles for custom Gutenberg blocks in WP dashboard
+// add custom styles for custom Gutenberg tpl-acf-blocks in WP dashboard
 function load_custom_wp_admin_style() {
-	wp_register_style( 'custom_wp_admin_css', get_template_directory_uri() . '/tpl-parts/blocks/block-custom-styles.css', false, '1.0.0' );
+	wp_register_style( 'custom_wp_admin_css', get_template_directory_uri() . '/tpl-acf-blocks/block-custom-styles.css', false, '1.0.0' );
 	wp_enqueue_style( 'custom_wp_admin_css' );
+
+	wp_enqueue_script('admin-custom', get_template_directory_uri() . '/js/admin-custom.js', array('wp-blocks', 'wp-element', 'wp-hooks'), '', true);
+	//We use wp_localize_script to pass data
+	wp_localize_script( 'admin-custom', 'passed_data', array( 'templateUrl' => get_stylesheet_directory_uri() ) );
 }
 add_action( 'admin_enqueue_scripts', 'load_custom_wp_admin_style' );
 

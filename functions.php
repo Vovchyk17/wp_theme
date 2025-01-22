@@ -22,17 +22,19 @@ function custom_tax($pid, $tax) {
 		$term_list = '';
 		$co = count( $tax_terms );
 		$i = 1;
+		$term_list .= '<div class="tax_terms">';
 		foreach ( $tax_terms as $t ) {
 			$tax_term = get_term( $t );
 			$term_list .= '<span class="tax_term">' . $tax_term->name . '</span>' . ( $i ++ != $co ? '<span>,</span> ' : '' );
 		}
+		$term_list .= '</div>';
 
 		return $term_list;
 	}
 }
 
 // custom templates slugs to use with custom_tax_linked() function
-const CUSTOM_TEMPLATE_SLUG = '/custom-post-type/';
+/*const CUSTOM_TEMPLATE_SLUG = '/custom-post-type/';*/
 
 // get post taxonomy as hash with related template slug
 function custom_tax_linked($pid, $tax, $template_slug) {
@@ -41,10 +43,13 @@ function custom_tax_linked($pid, $tax, $template_slug) {
 		$term_list = '';
 		$co = count( $tax_terms );
 		$i = 1;
+		$term_list .= '<div class="tax_terms">';
 		foreach ( $tax_terms as $t ) {
 			$tax_term = get_term( $t );
-			$term_list .= '<a href="' . $template_slug . '#' . $tax_term->slug . '" class="tax_term">' . $tax_term->name . '</a>' . ( $i ++ != $co ? '<span>,</span> ' : '' );
+			$term_link = get_term_link( $tax_term );
+			$term_list .= '<a href="' . $term_link. '" class="tax_term">' . $tax_term->name . '</a>' . ( $i ++ != $co ? '<span>,</span> ' : '' );
 		}
+		$term_list .= '</div>';
 
 		return $term_list;
 	}

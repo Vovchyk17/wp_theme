@@ -2,21 +2,37 @@
 /*jshint multistr: true, latedef: nofunc */
 /*global jQuery, $, Swiper*/
 
-
 // ajax posts - loading + filtering
 function load_posts_ajax(filter_data = null) {
-    const ajax_content = $('.posts__container');
+    const ajax_content = $('.posts__container[data-post-type="post"]');
+    const posts_per_page = parseInt(ajax_content.data('posts-per-page')) || 6;
 
     if (!filter_data) {
         filter_data = {
             tax: {
                 category: [],
+                topic: []
             },
+            posts_per_page: posts_per_page,
+            date: [],
+            author: [],
             next: 1,
+            s: $('#s_ajax').val() || ''
         }
-        $('.posts__dropdown option:selected').each(function () {
-            const _val = $(this).val();
-            if (_val !== '*') filter_data.tax.category.push(_val);
+
+        $('.tax_filter_dropdown').each(function () {
+            const option_val = $(this).find('option:selected').val();
+            if (option_val !== '*') filter_data.tax[$(this).data('tax')] = [option_val];
+        });
+
+        const date_selected = $('#date_dropdown option:selected').val();
+        date_selected !== '*' ? filter_data.date = [date_selected] : filter_data.date = [];
+
+        const author_selected = $('#author_dropdown option:selected').val();
+        author_selected !== '*' ? filter_data.author = [parseInt(author_selected)] : filter_data.author = [];
+
+        $('.posts__filters a.is_filtered').each(function () {
+            filter_data.tax[$(this).data('tax')] = $(this).data('id') !== '*' ? [$(this).data('id')] : [];
         });
     }
 
@@ -30,15 +46,10 @@ function load_posts_ajax(filter_data = null) {
         success: function (result) {
             ajax_content.find('.load_more_holder, .loader_holder').remove();
 
-            if (parseInt(result.paged) !== 1) {
-                ajax_content.append(result.html);
-            } else {
-                ajax_content.html(result.html);
-            }
+            ajax_content[parseInt(result.paged) !== 1 ? 'append' : 'html'](result.html);
 
             $('.show_box').removeClass('is_loading');
         }
-
     });
 
     return false;
@@ -48,61 +59,65 @@ function load_posts_ajax(filter_data = null) {
 $(document).ready(function () {
     'use strict';
 
-    // ajax posts - filtering
+    /*ajax post filter start*/
+    // buttons filter
     const posts_filters = $('.posts__filters a');
-    const posts_dropdown = $('.posts__dropdown');
-
-    // desktop
     posts_filters.on('click', function () {
-        $(this).parents('.posts__filters').find('.show_box').addClass('is_loading');
+        const $this = $(this);
+        $this.parents('.posts__filters').find('.show_box').addClass('is_loading');
 
-        const _term_id = $(this).attr('data-id');
+        const tax_name = $this.data('tax');
+        posts_filters.filter(`[data-tax="${tax_name}"]`).removeClass('is_filtered');
+        $this.addClass('is_filtered');
 
-        const filter_data = {
-            tax: {
-                category: _term_id === '*' ? [] : [_term_id],
-            },
-            next: 1,
-        };
-
-        load_posts_ajax(filter_data)
-
-        $('.posts__filters a').removeClass('is_filtered');
-        $(this).addClass('is_filtered');
-
-        // window.location.hash = cat;
-
+        load_posts_ajax();
         return false;
     });
-    // desktop - hash catch
-   /* posts_filters.each(function() {
-        const hash = $(this).attr('href');
-        if (hash === window.location.hash) {
-            $(this).click();
-        }
-    });*/
 
-    // mobile
-    posts_dropdown.on('change', function () {
+    // dropdown filter
+    $('.tax_filter_dropdown').on('change', function () {
         $(this).parents('.posts__filters').find('.show_box').addClass('is_loading');
         load_posts_ajax();
-        // window.location.hash = cat;
     });
-    // mobile - hash catch
-    /*posts_dropdown.find('option').each(function() {
-        const hash = $(this).val();
-        if (hash === window.location.hash) {
-            const ti = $(this).index();
-            posts_dropdown.prop('selectedIndex', ti).selectric('refresh');
-        }
-    });*/
 
-    // ajax posts - page loading
+    // date filter
+    $('#date_dropdown').on('change', function () {
+        $(this).parents('.posts__filters').find('.show_box').addClass('is_loading');
+        load_posts_ajax();
+    });
+
+    //author filter
+    $('#author_dropdown').on('change', function () {
+        $(this).parents('.posts__filters').find('.show_box').addClass('is_loading');
+        load_posts_ajax();
+    });
+
+    // search form
+    const search_form = $('.form_search_ajax[data-post-type="post"]');
+    const search_form_input = search_form.find('input[type="search"]');
+    const search_form_submit_btn = search_form.find('button[type="submit"]');
+    search_form_input.on('input', function () {
+        if ($(this).val().length > 0) {
+            search_form_submit_btn.hide();
+        } else {
+            search_form_submit_btn.show();
+        }
+    });
+
+    $(this).on('submit', search_form, function (event) {
+        event.preventDefault();
+        $(this).parent().find('.show_box').addClass('is_loading');
+        load_posts_ajax();
+    });
+
+    // load more posts
     $(this).on('click', '.load_more__posts', function () {
         $(this).parent().next().find('.show_box').addClass('is_loading');
         load_posts_ajax($(this).data('next_page'));
         $(this).parent().remove();
         return false;
     });
+    /*ajax post filter end*/
+
 
 });

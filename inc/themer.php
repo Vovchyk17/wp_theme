@@ -36,7 +36,7 @@ require_once( 'acf.php' );
 //require_once('cpt.php');
 
 // custom ajax functions
-//require_once('ajax.php');
+require_once('ajax.php');
 
 // custom theme URL
 function theme( $filepath = null ) {
@@ -262,7 +262,7 @@ add_action( 'after_setup_theme', function () {
 	remove_theme_support( 'core-block-patterns' );
 } );
 
-/*Load Gutenberg blocks styles separately*/
+/*Load Gutenberg tpl-acf-blocks styles separately*/
 add_filter( 'should_load_separate_core_block_assets', '__return_true' );
 add_filter( 'styles_inline_size_limit', '__return_zero' );
 
@@ -299,7 +299,7 @@ function custom_wpkses_post_tags( $tags, $context ) {
 
 add_filter( 'wp_kses_allowed_html', 'custom_wpkses_post_tags', 10, 2 );
 
-/*Disable Gutenberg blocks*/
+/*Disable Gutenberg tpl-acf-blocks*/
 function gutenberg_blacklist_blocks( $allowed_blocks ) {
 	// Blocks to blacklist with their slugs
 	$blocks_to_blacklist = array(
@@ -360,18 +360,44 @@ function gutenberg_blacklist_blocks( $allowed_blocks ) {
 		'core/loginout',
 		'core/term-description',
 		'core/query-title',
-		'core/post-author-biography'
+		'core/post-author-biography',
+//		'core/paragraph',
+//		'core/heading',
+//		'core/list',
+//		'core/quote',
+//		'core/code',
+//		'core/preformatted',
+//		'core/table',
+//		'core/freeform',
+//		'core/gallery',
+//		'core/audio',
+//		'core/cover',
+//		'core/file',
+//		'core/media-text',
+//		'core/video',
+//		'core/columns',
+//		'core/buttons',
+//		'core/group',
+//		'core/separator',
+//		'core/spacer',
+//		'core/html', // custom html block
+//		'core/shortcode',
+//		'core/embed', // embeds block
+//		'contact-form-7/contact-form-selector',
+		'yoast-seo/breadcrumbs',
+		'yoast/how-to-block',
+		'yoast/faq-block',
 	);
 
-	// get all the registered blocks
+	// get all the registered tpl-acf-blocks
 	$blocks = WP_Block_Type_Registry::get_instance()->get_all_registered();
 
-	// disable the blocks specified in $blocks_to_blacklist
+	// disable the tpl-acf-blocks specified in $blocks_to_blacklist
 	foreach ( $blocks_to_blacklist as $block_slug ) {
 		unset( $blocks[ $block_slug ] );
 	}
 
-	// return the new list of allowed blocks
+	// return the new list of allowed tpl-acf-blocks
 	return array_keys( $blocks );
 }
 
