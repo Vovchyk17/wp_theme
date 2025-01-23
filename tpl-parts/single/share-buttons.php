@@ -2,7 +2,7 @@
 
 <li><a class="i_fcbk" href="https://www.facebook.com/sharer.php?u=<?php the_permalink(); ?>&amp;quote=<?php echo esc_html( $share_title ); ?>"
        title="Share at Facebook" target="_blank" rel="noopener"></a></li>
-<li><a class="i_twtr" href="https://x.com/intent/tweet?url=<?php the_permalink(); ?>&amp;text=<?php echo esc_html( $share_title ); ?>"
+<li><a class="i_x_twttr" href="https://x.com/intent/tweet?url=<?php the_permalink(); ?>&amp;text=<?php echo esc_html( $share_title ); ?>"
        title="Share on x.com" target="_blank" rel="noopener"></a></li>
 <li><a class="i_lnkdn" href="https://www.linkedin.com/sharing/share-offsite/?url=<?php the_permalink(); ?>"
        title="Share at LinkedIn" target="_blank" rel="noopener"></a></li>
