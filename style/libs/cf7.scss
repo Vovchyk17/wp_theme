@@ -140,13 +140,13 @@ div.wpcf7 {
           content: '';
           height: 24px;
           border-radius: 3px;
-          border: 1px solid $cl;
+          border: 1px solid $tx;
         }
 
         &:after {
           content: '\e907';
           font: 400 20px/24px $icons;
-          color: $cl;
+          color: $tx;
           text-align: center;
           opacity: 0;
         }

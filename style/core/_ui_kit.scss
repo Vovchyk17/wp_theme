@@ -235,6 +235,10 @@ hr {
 
 }
 
+.wp-block-table table {
+  min-width: 640px;
+}
+
 // full-frame responsive video
 .full_frame,
 .is-type-video .wp-block-embed__wrapper,

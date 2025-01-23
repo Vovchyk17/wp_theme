@@ -69,10 +69,13 @@ header {
       z-index: 2;
       &.is_open {transform: translateX(0)}
     }
-    @include rwd-range(1024, 768) {width: 50%}
-    @include rwd-range(1024, 481) {
-      padding-left: 39px;
-      padding-right: 39px;
+    .logged-in.admin-bar & {
+      @include rwd-range(1024, 783) {
+        top: 92px;
+      }
+      @include rwd-max(782) {
+        top: 106px;
+      }
     }
     @include rwd-max(767) {width: 100%}
 
