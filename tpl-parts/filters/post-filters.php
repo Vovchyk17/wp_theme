@@ -5,7 +5,9 @@ $pt         = $part_args['post_type'];
 $taxonomies = $part_args['taxonomies'];
 $labels     = $part_args['labels'];
 
-get_template_part( 'tpl-parts/filters/search-form-ajax');
+echo '<div class="posts__filters">';
+
+get_template_part( 'tpl-parts/filters/search-form-ajax' );
 
 get_template_part( 'tpl-parts/filters/post-filters/filter', 'date', array( 'post_type' => $pt ) );
 
@@ -13,15 +15,19 @@ get_template_part( 'tpl-parts/filters/post-filters/filter', 'author', array( 'la
 
 if ( ! empty( $taxonomies ) ) {
 	foreach ( $taxonomies as $index => $tax ) {
-		$label = $labels[$index] ?? 'Categories';
+		$label = $labels[ $index ] ?? 'Categories';
 		get_template_part( 'tpl-parts/filters/post-filters/filter', 'taxonomy', array(
 			'post_type' => $pt,
 			'tax'       => $tax,
 			'label'     => $label
-		));
+		) );
 	}
 }
 
+echo '<div class="posts__filters_item"><a href="javascript:;" class="posts__filters_clear">' . esc_attr( 'Clear filters' ) . '</a></div>';
+
 echo wp_kses( get_loader(), $GLOBALS['allowed_loader'] );
+
+echo '</div>';
 ?>
 

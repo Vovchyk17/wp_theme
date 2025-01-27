@@ -11,7 +11,7 @@ function load_posts_ajax(filter_data = null) {
         filter_data = {
             tax: {
                 category: [],
-                topic: []
+                topic: [],
             },
             posts_per_page: posts_per_page,
             date: [],
@@ -20,20 +20,18 @@ function load_posts_ajax(filter_data = null) {
             s: $('#s_ajax').val() || ''
         }
 
-        $('.tax_filter_dropdown').each(function () {
-            const option_val = $(this).find('option:selected').val();
-            if (option_val !== '*') filter_data.tax[$(this).data('tax')] = [option_val];
+        $('.tax_filter_dropdown').each(function() {
+            const tax = $(this).data('tax');
+            const selected_value = $(this).val();
+            filter_data.tax[tax] = selected_value !== '*' ? [parseInt(selected_value)] : [];
         });
 
-        const date_selected = $('#date_dropdown option:selected').val();
+        const date_selected = $('#date_dropdown').val();
         date_selected !== '*' ? filter_data.date = [date_selected] : filter_data.date = [];
 
-        const author_selected = $('#author_dropdown option:selected').val();
+        const author_selected = $('#author_dropdown').val();
         author_selected !== '*' ? filter_data.author = [parseInt(author_selected)] : filter_data.author = [];
 
-        $('.posts__filters a.is_filtered').each(function () {
-            filter_data.tax[$(this).data('tax')] = $(this).data('id') !== '*' ? [$(this).data('id')] : [];
-        });
     }
 
     $.ajax({
@@ -60,34 +58,8 @@ $(document).ready(function () {
     'use strict';
 
     /*ajax post filter start*/
-    // buttons filter
-    const posts_filters = $('.posts__filters a');
-    posts_filters.on('click', function () {
-        const $this = $(this);
-        $this.parents('.posts__filters').find('.show_box').addClass('is_loading');
-
-        const tax_name = $this.data('tax');
-        posts_filters.filter(`[data-tax="${tax_name}"]`).removeClass('is_filtered');
-        $this.addClass('is_filtered');
-
-        load_posts_ajax();
-        return false;
-    });
-
     // dropdown filter
-    $('.tax_filter_dropdown').on('change', function () {
-        $(this).parents('.posts__filters').find('.show_box').addClass('is_loading');
-        load_posts_ajax();
-    });
-
-    // date filter
-    $('#date_dropdown').on('change', function () {
-        $(this).parents('.posts__filters').find('.show_box').addClass('is_loading');
-        load_posts_ajax();
-    });
-
-    //author filter
-    $('#author_dropdown').on('change', function () {
+    $('.posts__filters select').on('change', function () {
         $(this).parents('.posts__filters').find('.show_box').addClass('is_loading');
         load_posts_ajax();
     });
@@ -104,9 +76,9 @@ $(document).ready(function () {
         }
     });
 
-    $(this).on('submit', search_form, function (event) {
+    search_form.on('submit', function (event) {
         event.preventDefault();
-        $(this).parent().find('.show_box').addClass('is_loading');
+        $(this).parents('.posts__filters').find('.show_box').addClass('is_loading');
         load_posts_ajax();
     });
 
@@ -117,7 +89,17 @@ $(document).ready(function () {
         $(this).parent().remove();
         return false;
     });
-    /*ajax post filter end*/
 
+    $('.posts__filters_clear').on('click', function () {
+        $(this).parents('.posts__filters').find('.show_box').addClass('is_loading');
+        $('#s_ajax').val('');
+        $('.posts__filters select').each(function () {
+            $(this).find('option:first').prop('selected', true);
+            $(this).selectric('refresh');
+        });
+        load_posts_ajax();
+        return false;
+    })
+    /*ajax post filter end*/
 
 });

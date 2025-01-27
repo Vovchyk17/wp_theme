@@ -3,15 +3,20 @@
 
 .posts {
   &__filters {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    align-items: center;
     gap: 24px;
     position: relative;
     margin-bottom: 64px;
-    &_desktop {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 24px;
+    > * {
+      grid-column: span 12;
+      @include rwd-min(540) {
+        grid-column: span 6;
+      }
+      @include rwd-min(1025) {
+        grid-column: span 2;
+      }
     }
   }
 }
