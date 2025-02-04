@@ -31,5 +31,10 @@ $posts_per_page = 6;
 $file_name = basename( __FILE__, '.php' );
 tpl_style( $file_name );
 
+wp_enqueue_script('ajax', get_stylesheet_directory_uri(). '/js/ajax.js', array( 'jquery' ), null, array(
+	'in_footer' => true,
+	'strategy'  => 'defer'
+));
+
 get_footer();
 ?>

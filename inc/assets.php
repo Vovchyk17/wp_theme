@@ -30,7 +30,6 @@ function tt_add_jscss() {
 		'in_footer' => true,
 		'strategy'  => 'defer'
 	) );
-	wp_enqueue_script('ajax', get_stylesheet_directory_uri(). '/js/ajax.js', array('libs'), null, true);
 
 	// uncomment next line and comment all below it on deploy after webpack build
 	/*wp_enqueue_style('main', get_stylesheet_directory_uri(). '/dist/main.min.css', null, '1.0' );*/
@@ -70,6 +69,10 @@ function enqueue_contact_form_7_styles() {
 		global $post;
 		if ( contains_contact_form_7_block( $post->post_content ) ) {
 			wp_enqueue_script( 'selectric', get_stylesheet_directory_uri() . '/js/libs/selectric.js', array( 'jquery' ), null, true );
+			wp_enqueue_script( 'cf7-scripts', get_stylesheet_directory_uri() . '/js/libs/cf7-scripts.js', null, null, array(
+				'in_footer' => true,
+				'strategy'  => 'defer'
+			)  );
 			wp_enqueue_style( 'cf7', get_stylesheet_directory_uri() . '/style/libs/cf7.css', null, null );
 		}
 	}

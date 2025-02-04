@@ -77,26 +77,6 @@ $(document).ready(function() {
     });
     if ($(this).scrollTop() > 4) header.addClass('is_sticky');
 
-
-    // contact form 7
-    $(this).on('click', '.wpcf7-not-valid-tip', function() {
-        $(this).prev().trigger('focus');
-        $(this).fadeOut(250,function(){
-            $(this).remove();
-        });
-        $(this).parents('.wpcf7-form').find('.wpcf7-response-output').addClass('is_temp_hidden');
-    });
-    $(this).on('focus', '.wpcf7-form-control.wpcf7-not-valid', function() {
-        $(this).next('.wpcf7-not-valid-tip').fadeOut(250,function(){
-            $(this).remove();
-        });
-        $(this).parents('.wpcf7-form').find('.wpcf7-response-output').addClass('is_temp_hidden');
-    });
-    document.addEventListener( 'wpcf7submit', function( event ) {
-        $('.wpcf7-response-output').removeClass('is_temp_hidden');
-    }, false );
-
-
     // custom select
     if($('select').length > 0) {
         $('select').selectric({
@@ -171,40 +151,6 @@ $(document).ready(function() {
 
 $(window).on('load', function() {
     'use strict';
-
-    // swiper - block__custom_slider
-    $('.block__custom_slider').each(function () {
-        const slider_holder = $(this),
-            swiper_instance = slider_holder.find('.swiper'),
-            next = slider_holder.find('.sw_next'),
-            prev = slider_holder.find('.sw_prev'),
-            pagination = slider_holder.find('.sw_pagination');
-
-        const block_slider = new Swiper(swiper_instance[0], {
-            navigation: {
-                nextEl: next[0],
-                prevEl: prev[0]
-            },
-            pagination: {
-                el: pagination[0],
-                type: 'bullets',
-                clickable: true
-            },
-            loop: true,
-            speed: 600,
-            grabCursor: true,
-            effect: "creative",
-            creativeEffect: {
-                prev: {
-                    translate: ["-20%", 0, -1],
-                },
-                next: {
-                    translate: ["100%", 0, 0],
-                },
-            },
-        });
-    });
-
 
     // custom class for video in content (iframe)
     $('.content iframe').each(function(i) {

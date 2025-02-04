@@ -1,5 +1,5 @@
 <?php
-wp_enqueue_script( 'swiper', get_stylesheet_directory_uri() . '/js/libs/swiper.js', array( 'jquery' ), null, array('in_footer' => true, 'strategy' => 'defer' ) );
+wp_enqueue_script( 'swiper', get_stylesheet_directory_uri() . '/js/libs/swiper.js', null, null, array('in_footer' => true, 'strategy' => 'defer' ) );
 wp_enqueue_style( 'swiper', get_stylesheet_directory_uri() . '/style/libs/swiper.css', null, null );
 
 // get fields
