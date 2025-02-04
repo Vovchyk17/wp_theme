@@ -3,7 +3,7 @@
 $title = is_home() ? get_the_title( BLOG_ID ) : get_the_archive_title();
 get_template_part( 'tpl-parts/top-panels/top-panel', 'default', array( 'title' => $title ) );
 
-$posts_per_page = 6;
+$posts_per_page = 3;
 ?>
 
 <section class="posts__page">
@@ -30,6 +30,11 @@ $posts_per_page = 6;
 <?php
 $file_name = basename( __FILE__, '.php' );
 tpl_style( $file_name );
+
+wp_enqueue_script('ajax', get_stylesheet_directory_uri(). '/js/ajax-js.js', null, null, array(
+	'in_footer' => true,
+	'strategy'  => 'defer'
+));
 
 get_footer();
 ?>

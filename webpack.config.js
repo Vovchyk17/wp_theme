@@ -23,7 +23,7 @@ module.exports = {
     entry: {
         'main': [
             './js/libs/common-libs.js',
-            './js/scripts.js',
+            './js/scripts-jq.js',
             ...(isProduction ? ['./style/fonts.css', './style/style.css'] : [])
         ],
         'ajax': './js/ajax.js',

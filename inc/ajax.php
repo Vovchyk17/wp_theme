@@ -4,6 +4,8 @@
 function load_posts_ajax( $filter_data = null ) {
 	extract( $_POST );
 
+	global $post;
+
 	$tax_query      = array();
 	$date_query     = array();
 	$posts_per_page = $filter_data['posts_per_page'] ?: 9;

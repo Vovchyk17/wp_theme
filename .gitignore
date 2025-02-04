@@ -57,9 +57,9 @@ Temporary Items
 *.css.map
 
 # Specific style paths
-/style/style.css
-/style/templates/*.css
-/style/templates/*/*.css
+#/style/style.css
+#/style/templates/*.css
+#/style/templates/*/*.css
 
 # Commonly ignored directories for Node and PHP development
 node_modules/

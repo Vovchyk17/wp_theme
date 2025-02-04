@@ -1,6 +1,3 @@
-/*jslint browser: true, white: true, plusplus: true, regexp: true, indent: 4, maxerr: 50, es5: true */
-/*jshint multistr: true, latedef: nofunc */
-/*global jQuery, $, Swiper*/
 
 // control :focus when using mouse/keyboard
 document.body.addEventListener('mousedown', function() {
@@ -10,228 +7,125 @@ document.body.addEventListener('keydown', function() {
     document.body.classList.remove('is_using_mouse');
 });
 
-
-$(document).ready(function() {
+document.addEventListener('DOMContentLoaded', () => {
     'use strict';
 
     // variables
-    const body = $('body');
-    const header = $('header');
-    const menu__toggle = $('.menu__toggle');
-    const menu__primary = $('.menu__primary');
-    const menu__a_parent = menu__primary.find('.menu-item-has-children > a');
-
+    const body = document.body;
+    const header = document.querySelector('header');
+    const menuToggle = document.querySelector('.menu__toggle');
+    const menuPrimary = document.querySelector('.menu__primary');
+    const menuParents = menuPrimary.querySelectorAll('.menu-item-has-children > a');
 
     // hamburger + menu
-    menu__toggle.on('click', function() {
-        $(this).toggleClass('is_active');
-        menu__primary.stop().toggleClass('is_open');
-        body.toggleClass('is_overflow');
+    menuToggle.addEventListener('click', () => {
+        menuToggle.classList.toggle('is_active');
+        menuPrimary.classList.toggle('is_open');
+        body.classList.toggle('is_overflow');
     });
+
     // close menu with Esc key
-    body.on('keyup', function (e) {
-        if (e.keyCode === 27 && menu__toggle.hasClass('is_active')) {
-            $('.menu__toggle.is_active').click();
-            $('a[href="#main"]').focus();
+    body.addEventListener('keyup', (e) => {
+        if (e.key === 'Escape' && menuToggle.classList.contains('is_active')) {
+            menuToggle.click();
+            document.querySelector('a[href="#main"]').focus();
         }
     });
+
     // open/close sub-menu with Tab key
-    menu__a_parent.on('focus', function () {
-        $(this).parent().addClass('is_focused');
-    });
-    menu__primary.find('.sub-menu').each(function () {
-        const sub_menu_links = $(this).find('> li > a');
-        const last_sub_menu_link = sub_menu_links.last();
-        last_sub_menu_link.on('blur', function () {
-            $(this).parents('.menu-item-has-children').removeClass('is_focused');
+    menuParents.forEach(parent => {
+        parent.addEventListener('focus', () => {
+            parent.parentElement.classList.add('is_focused');
         });
-    });
-    // option to make parent element hidden from screen readers
-    // menu__a_parent.attr({
-    //     'aria-hidden': 'true',
-    //     'tabindex': -1
-    // });
-    // append "plus" element in sub-menu parent item
-    menu__a_parent.after('<span class="rwd_show" tabindex="0" role="button" aria-label="Sub-menu toggle" aria-expanded="false" />');
-    function sub_menu_action(elem) {
-        const exp = elem.attr('aria-expanded');
-        (exp === 'false') ? elem.attr('aria-expanded', 'true') : elem.attr('aria-expanded', 'false');
-        elem.toggleClass('is_open').next().stop().toggle();
-    }
-    menu__primary.on('click', '[aria-label="Sub-menu toggle"]', function() {
-        sub_menu_action($(this));
-    }).on('keyup', '[aria-label="Sub-menu toggle"]', function (e) {
-        if (e.keyCode === 13) {
-            sub_menu_action($(this));
+
+        const submenu = parent.nextElementSibling;
+        if (submenu && submenu.classList.contains('sub-menu')) {
+            const links = submenu.querySelectorAll('li > a');
+            const lastLink = links[links.length - 1];
+            lastLink.addEventListener('blur', () => {
+                parent.parentElement.classList.remove('is_focused');
+            });
         }
     });
 
+    // Append "plus" element in sub-menu parent item
+    menuParents.forEach(parent => {
+        const toggle = document.createElement('span');
+        toggle.className = 'rwd_show';
+        toggle.tabIndex = 0;
+        toggle.setAttribute('role', 'button');
+        toggle.setAttribute('aria-label', 'Sub-menu toggle');
+        toggle.setAttribute('aria-expanded', 'false');
+        parent.insertAdjacentElement('afterend', toggle);
+    });
 
-    // header
-    $(window).on('scroll', function () {
-        if ($(this).scrollTop() > 5) {
-            header.addClass('is_sticky');
+    function toggleSubMenu(element) {
+        const expanded = element.getAttribute('aria-expanded') === 'true';
+        element.setAttribute('aria-expanded', !expanded);
+        element.classList.toggle('is_open');
+        element.nextElementSibling.style.display = expanded ? 'none' : 'block';
+    }
+
+    menuPrimary.addEventListener('click', (e) => {
+        if (e.target.matches('[aria-label="Sub-menu toggle"]')) {
+            toggleSubMenu(e.target);
+        }
+    });
+
+    menuPrimary.addEventListener('keyup', (e) => {
+        if (e.target.matches('[aria-label="Sub-menu toggle"]') && e.key === 'Enter') {
+            toggleSubMenu(e.target);
+        }
+    });
+
+    // header sticky on scroll
+    const toggleStickyHeader = () => {
+        if (window.scrollY > 5) {
+            header.classList.add('is_sticky');
         } else {
-            header.removeClass('is_sticky');
+            header.classList.remove('is_sticky');
         }
-    });
-    if ($(this).scrollTop() > 4) header.addClass('is_sticky');
-
-
-    // contact form 7
-    $(this).on('click', '.wpcf7-not-valid-tip', function() {
-        $(this).prev().trigger('focus');
-        $(this).fadeOut(250,function(){
-            $(this).remove();
-        });
-        $(this).parents('.wpcf7-form').find('.wpcf7-response-output').addClass('is_temp_hidden');
-    });
-    $(this).on('focus', '.wpcf7-form-control.wpcf7-not-valid', function() {
-        $(this).next('.wpcf7-not-valid-tip').fadeOut(250,function(){
-            $(this).remove();
-        });
-        $(this).parents('.wpcf7-form').find('.wpcf7-response-output').addClass('is_temp_hidden');
-    });
-    document.addEventListener( 'wpcf7submit', function( event ) {
-        $('.wpcf7-response-output').removeClass('is_temp_hidden');
-    }, false );
-
-
-    // custom select
-    if($('select').length > 0) {
-        $('select').selectric({
-            disableOnMobile: false,
-            nativeOnMobile: false,
-            arrowButtonMarkup: '<span class="select_arrow"></span>'
-        });
-        // $('select.wpcf7-form-control').each(function () {
-        //     $(this).find('option').first().val('');
-        // });
-    }
-
-
-    // fancybox
-    $('[data-fancybox]').fancybox({
-        touch: {
-            vertical: false,
-            momentum: true
-        },
-        smallBtn: false,
-        beforeLoad: function( instance, slide ) {
-            // fix if header is sticky
-            header.addClass('compensate-for-scrollbar');
-        },
-        afterClose: function( instance, slide ) {
-            // fix if header is sticky
-            header.removeClass('compensate-for-scrollbar');
-            // remove body class after event
-            if (body.hasClass('is_searching')) {
-                body.removeClass('is_searching');
-            }
-        }
-    });
-
-
-    // add body class on event
-    $('.search_toggle').on('click', function () {
-        body.addClass('is_searching');
-    });
-
-
-    // animations
-    // AOS.init({
-        // disable: true,
-        // disable: 'mobile',
-        // once: true,
-        // offset: 150,
-        // duration: 600,
-        // easing: 'ease-in-out'
-    // });
-
+    };
+    window.addEventListener('scroll', toggleStickyHeader);
+    toggleStickyHeader();
 
     // scroll to
-    $('a[data-scrollto]').on('click', function () {
-        const anchor = $(this).data('scrollto');
-
-        if ($(anchor).length > 0) {
-            $('html, body').animate({
-                scrollTop: $(anchor).offset().top - header.outerHeight()
-            }, 700);
-        }
-    });
-
-    // wrap tables for responsive design
-    if($('.content table').length > 0) {
-        $('.content table').wrap('<div class="table_wrapper"></div>');
-    }
-    
-});
-
-
-
-$(window).on('load', function() {
-    'use strict';
-
-    // swiper - block__custom_slider
-    $('.block__custom_slider').each(function () {
-        const slider_holder = $(this),
-            swiper_instance = slider_holder.find('.swiper'),
-            next = slider_holder.find('.sw_next'),
-            prev = slider_holder.find('.sw_prev'),
-            pagination = slider_holder.find('.sw_pagination');
-
-        const block_slider = new Swiper(swiper_instance[0], {
-            navigation: {
-                nextEl: next[0],
-                prevEl: prev[0]
-            },
-            pagination: {
-                el: pagination[0],
-                type: 'bullets',
-                clickable: true
-            },
-            loop: true,
-            speed: 600,
-            grabCursor: true,
-            effect: "creative",
-            creativeEffect: {
-                prev: {
-                    translate: ["-20%", 0, -1],
-                },
-                next: {
-                    translate: ["100%", 0, 0],
-                },
-            },
+    document.querySelectorAll('a[data-scrollto]').forEach(link => {
+        link.addEventListener('click', (e) => {
+            const anchor = document.querySelector(link.dataset.scrollto);
+            if (anchor) {
+                e.preventDefault();
+                window.scrollTo({
+                    top: anchor.offsetTop - header.offsetHeight,
+                    behavior: 'smooth'
+                });
+            }
         });
     });
 
+    // Wrap tables for responsive design
+    document.querySelectorAll('.content table').forEach(table => {
+        const wrapper = document.createElement('div');
+        wrapper.className = 'table_wrapper';
+        table.parentNode.insertBefore(wrapper, table);
+        wrapper.appendChild(table);
+    });
 
-    // custom class for video in content (iframe)
-    $('.content iframe').each(function(i) {
-        const t = $(this),
-            p = t.parent();
-        if ( (p.is('p') || p.is('span') ) && !p.hasClass('full_frame')) {
-            p.addClass('full_frame');
+    // Check if paragraph is empty
+    document.querySelectorAll('p').forEach(p => {
+        if (p.innerHTML.replace(/\s|&nbsp;/g, '').length === 0) {
+            p.classList.add('j_empty');
+        }
+    });
+
+    //fancybox init
+    Fancybox.bind("[data-fancybox]");
+
+    document.querySelectorAll('.content iframe').forEach(iframe => {
+        const parent = iframe.parentElement;
+        if ((parent.tagName === 'P' || parent.tagName === 'SPAN') && !parent.classList.contains('full_frame')) {
+            parent.classList.add('full_frame');
         }
     });
 
 });
-
-
-
-// close on click outside
-// $(document).on('mouseup', function(e) {
-//     let menu = $('.menu__primary');
-//
-//     if (!menu.is(e.target) && !$('.menu__toggle.is_active').is(e.target) && menu.has(e.target).length === 0 && menu.hasClass('is_open')) {
-//         $('.menu__toggle.is_active').click();
-//     }
-// });
-
-
-
-// proper resize event
-// $(window).resizeEnd(function() {
-//     'use strict';
-//
-// });
