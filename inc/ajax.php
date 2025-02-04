@@ -1,10 +1,7 @@
 <?php
-
 // ajax posts load
 function load_posts_ajax( $filter_data = null ) {
 	extract( $_POST );
-
-	global $post;
 
 	$tax_query      = array();
 	$date_query     = array();
