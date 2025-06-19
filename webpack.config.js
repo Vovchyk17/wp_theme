@@ -85,7 +85,7 @@ module.exports = {
             filename: 'dist/[name].min.css'
         }),
         new BrowserSyncPlugin({
-            proxy: 'http://localhost:10022/',
+            proxy: 'http://wp-theme.local/',
             files: ['**/*.php', '**/*.scss', '**/*.js'],
             notify: false,
             reloadDelay: 0
