@@ -1,5 +1,20 @@
 <?php
 /* ACF settings */
+function my_acf_json_save_point( $path ) {
+    return get_template_directory() . '/inc/acf-json';
+}
+add_filter( 'acf/settings/save_json', 'my_acf_json_save_point' );
+
+function my_acf_json_load_point( $paths ) {
+    // Remove the original path (optional).
+    unset($paths[0]);
+
+    // Append the new path and return it.
+    $paths[] = get_template_directory() . '/inc/acf-json';
+
+    return $paths;
+}
+add_filter( 'acf/settings/load_json', 'my_acf_json_load_point' );
 
 // add custom tab (group) for common ACF fields
 if(function_exists('acf_add_options_page') ) {
