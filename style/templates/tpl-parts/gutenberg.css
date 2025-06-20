@@ -1,0 +1,16 @@
+.gutenberg .content > *:not(p):not(.wp-block-heading):not(.wp-block-spacer):not(.wp-block-separator) {
+  margin-bottom: 80px;
+}
+@media screen and (min-width: 768px) {
+  .gutenberg .content > *:not(p):not(.wp-block-heading):not(.wp-block-spacer):not(.wp-block-separator) {
+    margin-bottom: 120px;
+  }
+}
+.gutenberg .content > *:last-child {
+  margin-bottom: 0 !important;
+}
+.gutenberg .content .wp-block-columns {
+  gap: var(--grid-gap);
+}
+
+/*# sourceMappingURL=gutenberg.css.map */
