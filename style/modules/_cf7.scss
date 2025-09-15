@@ -5,6 +5,14 @@ $form-success: #22b86c;
 div.wpcf7 {
   position: relative;
 
+  .hidden-fields-container {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    pointer-events: none;
+  }
+
   .inputs_wrap {
     @include rwd-min(768) {
       display: flex;
