@@ -57,7 +57,7 @@ add_action( 'after_setup_theme', 'wpa_activate_theme' );
 function wpa_activate_theme() {
 	update_option( 'image_default_link_type', 'none' );
 	// comment this before the build if uploads from the old website is being migrated with default year-month structure
-	update_option( 'uploads_use_yearmonth_folders', 0 );
+	/*update_option( 'uploads_use_yearmonth_folders', 0 );*/
 }
 
 // remove default menu classes + new custom classes
