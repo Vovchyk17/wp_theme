@@ -1,9 +1,8 @@
 <?php
-
 /* Theme config params */
 
 // defines
-//define ('GOOGLEMAPS', TRUE);
+//define('GOOGLE_MAPS_API_KEY', 'AIzaSyAO77hGcvxmsvOn1RSjDFQMI4YUnW89MDo'); // add your Google Maps API key here if using ACF g-map field
 define( 'WPE_POPUP_DISABLED', true );
 define( 'HOME_PAGE_ID', get_option( 'page_on_front' ) );
 define( 'BLOG_ID', get_option( 'page_for_posts' ) );

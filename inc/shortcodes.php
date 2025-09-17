@@ -11,7 +11,7 @@ function javascript_escape($str) {
 }
 
 // shortcode Google Map
-if(defined('GOOGLEMAPS')) {
+if(defined('GOOGLE_MAPS_API_KEY')) {
     /* google map shortcode
         *** Using [googlemap id="somemapid" coordinates="1 ,1" zoom="17" height="500px" infobox="<p>Some Infobox Content</p>"]
         *** if need street view, please add 'streetview="true"';
