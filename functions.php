@@ -15,49 +15,37 @@ add_image_size('mob_slider', '480', '320', true);
 add_image_size('top_default', '1095', '616', true);
 add_image_size('custom_gallery', '525', '395', true);
 
-// get post taxonomy
+// Returns the taxonomy terms for a given post and taxonomy as a comma-separated list of HTML span elements.
 function custom_tax($pid, $tax) {
-	if ( get_the_terms( $pid, $tax ) ) {
-		$tax_terms = get_the_terms( $pid, $tax );
-		$term_list = '';
-		$co = count( $tax_terms );
-		$i = 1;
-		$term_list .= '<div class="tax_terms">';
-		foreach ( $tax_terms as $t ) {
-			$tax_term = get_term( $t );
-			$term_list .= '<span class="tax_term">' . $tax_term->name . '</span>' . ( $i ++ != $co ? '<span>,</span> ' : '' );
-		}
-		$term_list .= '</div>';
-
-		return $term_list;
+	$tax_terms = get_the_terms($pid, $tax);
+	if (empty($tax_terms) || is_wp_error($tax_terms)) {
+		return '';
 	}
+	$terms = array_map(function($term) {
+		return '<span class="tax_term">' . esc_html($term->name) . '</span>';
+	}, $tax_terms);
+	return '<div class="tax_terms">' . implode('<span>,</span> ', $terms) . '</div>';
 }
 
-// custom templates slugs to use with custom_tax_linked() function
-/*const CUSTOM_TEMPLATE_SLUG = '/custom-post-type/';*/
-
-// get post taxonomy as hash with related template slug
-function custom_tax_linked($pid, $tax, $template_slug) {
-	if ( get_the_terms($pid, $tax) ) {
-		$tax_terms = get_the_terms( $pid, $tax );
-		$term_list = '';
-		$co = count( $tax_terms );
-		$i = 1;
-		$term_list .= '<div class="tax_terms">';
-		foreach ( $tax_terms as $t ) {
-			$tax_term = get_term( $t );
-			$term_link = get_term_link( $tax_term );
-			$term_list .= '<a href="' . $term_link. '" class="tax_term">' . $tax_term->name . '</a>' . ( $i ++ != $co ? '<span>,</span> ' : '' );
-		}
-		$term_list .= '</div>';
-
-		return $term_list;
+// Get post taxonomy terms as linked HTML elements for a given post and taxonomy.
+function custom_tax_linked($pid, $tax) {
+	$tax_terms = get_the_terms($pid, $tax);
+	if (empty($tax_terms) || is_wp_error($tax_terms)) {
+		return '';
 	}
+	$terms = [];
+	foreach ($tax_terms as $term) {
+		$term_link = get_term_link($term);
+		if (!is_wp_error($term_link)) {
+			$terms[] = '<a href="' . esc_url($term_link) . '" class="tax_term">' . esc_html($term->name) . '</a>';
+		}
+	}
+	return '<div class="tax_terms">' . implode('<span>,</span> ', $terms) . '</div>';
 }
 
 //get page url by template name
 function get_page_url( $template_name ) {
-	$pages = get_posts( [
+	$page = get_posts( [
 		'post_type'   => 'page',
 		'post_status' => 'publish',
 		'meta_query'  => [
@@ -66,13 +54,11 @@ function get_page_url( $template_name ) {
 				'value'   => $template_name . '.php',
 				'compare' => '='
 			]
-		]
+		],
+		'numberposts' => 1
 	] );
-	if ( ! empty( $pages ) ) {
-		foreach ( $pages as $pages__value ) {
-			return get_permalink( $pages__value->ID );
-		}
+	if ( ! empty( $page ) ) {
+		return get_permalink( $page[0]->ID );
 	}
-
 	return get_bloginfo( 'url' );
 }
