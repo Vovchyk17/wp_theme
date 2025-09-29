@@ -38,7 +38,8 @@ require_once( 'acf.php' );
 require_once('ajax.php');
 
 // custom theme URL
-function theme( $filepath = null ) {
+function theme( $filepath = null ): array|string|null
+{
 	return preg_replace( '(https?://)', '//', get_stylesheet_directory_uri() . ( $filepath ? '/' . $filepath : '' ) );
 }
 
@@ -47,14 +48,16 @@ function get_alt( $id ) {
 	$c_alt = get_post_meta( $id, '_wp_attachment_image_alt', true );
 	$c_tit = get_the_title( $id );
 
-	return $c_alt ? $c_alt : $c_tit;
+	return $c_alt ?: $c_tit;
 }
 
-// run this code on 'after_theme_setup', when plugins have already been loaded
-add_action( 'after_setup_theme', 'wpa_activate_theme' );
+// Run this code ONCE on theme activation
+add_action( 'after_switch_theme', 'wpa_activate_theme' );
+
 // this function loads the plugins & updates some WordPress options
 function wpa_activate_theme() {
 	update_option( 'image_default_link_type', 'none' );
+
 	// comment this before the build if uploads from the old website is being migrated with default year-month structure
 	/*update_option( 'uploads_use_yearmonth_folders', 0 );*/
 }
@@ -167,25 +170,11 @@ function wpa_body_classes( $classes ) {
 	return $classes;
 }
 
-// custom SEO title
-function wpa_title() {
-	global $post;
-	if ( ! defined( 'WPSEO_VERSION' ) ) {
-		if ( is_404() ) {
-			echo '404 Page not found - ';
-		} elseif ( ( is_single() || is_page() ) && $post->post_parent ) {
-			$parent_title = get_the_title( $post->post_parent );
-			echo wp_title( '-', true, 'right' ) . esc_html( $parent_title ) . ' - ';
-		} else {
-			wp_title( '-', true, 'right' );
-		}
-		bloginfo( 'name' );
-	} else {
-		wp_title();
-	}
-}
 
-function wpa_init() {
+function wpa_init(): void
+{
+    // Let WordPress manage the document title for SEO compatibility.
+    add_theme_support( 'title-tag' );
 	// add support for page/post thumbnails
 	add_theme_support( 'post-thumbnails' );
 
@@ -266,13 +255,15 @@ add_filter( 'should_load_separate_core_block_assets', '__return_true' );
 add_filter( 'styles_inline_size_limit', '__return_zero' );
 
 // custom var_dump
-function wpa_dump($variable) {
+function wpa_dump($variable): void
+{
 	$pretty = function($v='',$c="&nbsp;&nbsp;&nbsp;&nbsp;",$in=-1,$k=null)use(&$pretty){$r='';if(in_array(gettype($v),array('object','array'))){$r.=($in!=-1?str_repeat($c,$in):'').(is_null($k)?'':"$k: ").'<br>';foreach($v as $sk=>$vl){$r.=$pretty($vl,$c,$in+1,$sk).'<br>';}}else{$r.=($in!=-1?str_repeat($c,$in):'').(is_null($k)?'':"$k: ").(is_null($v)?'&lt;NULL&gt;':"<strong>$v</strong>");}return$r;};
 	echo '<pre style="padding-left: 150px; font-family: Courier New"><code class="json">' . wp_kses_post($pretty($variable)) . '</code></pre>';
 }
 
 // custom loader
-function get_loader() {
+function get_loader(): string
+{
 	return '<div class="show_box"><div class="loader"><svg class="circular" viewBox="25 25 50 50"><circle class="path" cx="50" cy="50" r="20" fill="none" stroke-miterlimit="10"/></svg></div></div>';
 }
 
@@ -299,7 +290,8 @@ function custom_wpkses_post_tags( $tags, $context ) {
 add_filter( 'wp_kses_allowed_html', 'custom_wpkses_post_tags', 10, 2 );
 
 /* Disable specific Gutenberg blocks */
-function gutenberg_blacklist_blocks( $allowed_blocks, $editor_context ) {
+function gutenberg_blacklist_blocks( $allowed_blocks, $editor_context ): array
+{
     // Blocks to disable
     $blocks_to_disable = array(
         // Archives & Navigation

@@ -3,7 +3,6 @@
 <html lang="<?php echo $lang; ?>">
 <head>
 	<meta charset="UTF-8">
-	<title><?php wpa_title(); ?></title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0"/>
     <meta name="mobile-web-app-capable" content="yes">
 	<meta name="format-detection" content="telephone=no">

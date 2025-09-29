@@ -1,6 +1,7 @@
 <?php
 /* ACF settings */
-function my_acf_json_save_point( $path ) {
+function my_acf_json_save_point( $path ): string
+{
     return get_template_directory() . '/inc/acf-json';
 }
 add_filter( 'acf/settings/save_json', 'my_acf_json_save_point' );
@@ -27,7 +28,8 @@ if(function_exists('acf_add_options_page') ) {
 	));
 }
 
-function my_acf_init() {
+function my_acf_init(): void
+{
 	// g-map API key
    if ( defined( 'GOOGLE_MAPS_API_KEY' ) && GOOGLE_MAPS_API_KEY ) {
        acf_update_setting( 'google_api_key', GOOGLE_MAPS_API_KEY );
@@ -45,7 +47,8 @@ function my_acf_init() {
 add_action('acf/init', 'my_acf_init');
 
 // add custom styles for custom Gutenberg tpl-acf-blocks in WP dashboard
-function load_custom_wp_admin_style() {
+function load_custom_wp_admin_style(): void
+{
 	wp_register_style( 'custom_wp_admin_css', get_template_directory_uri() . '/tpl-acf-blocks/block-custom-styles.css', false, '1.0.0' );
 	wp_enqueue_style( 'custom_wp_admin_css' );
 
