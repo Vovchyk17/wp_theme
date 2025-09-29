@@ -137,7 +137,7 @@ add_shortcode('button', 'content_btn');
 // shortcode social media
 function so_me(): string {
     $so_me = get_field('so_me', 'option');
-    if (!$so_me) {
+    if (!is_array($so_me) || empty($so_me)) {
         return '';
     }
 
