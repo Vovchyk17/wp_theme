@@ -1,8 +1,9 @@
 <?php
 // custom js/stylesheet
-function tt_add_jscss() {
+function tt_enqueue_assets(): void
+{
 	if ( ! is_admin() ) {
-		wp_deregister_script( 'jquery' );
+//		wp_deregister_script( 'jquery' );
 		wp_deregister_script( 'jquery-ui-datepicker' );
 	}
 
@@ -14,10 +15,10 @@ function tt_add_jscss() {
 		wp_enqueue_script( 'googlemaps', '//maps.googleapis.com/maps/api/js?v=3.exp&language=en&key='.GOOGLE_MAPS_API_KEY, false, null, false );
 	}
 
-	wp_enqueue_script( 'jquery', get_stylesheet_directory_uri() . '/js/_jquery.js', false, null, array(
+	/*wp_enqueue_script( 'jquery', get_stylesheet_directory_uri() . '/js/_jquery.js', false, null, array(
 		'in_footer' => true,
 		'strategy'  => 'defer'
-	) );
+	) );*/
 
 	// uncomment next line and comment all below it on deploy after webpack build
 	/*wp_enqueue_script('main', get_stylesheet_directory_uri(). '/dist/main.min.js', array('jquery'), '1.0', array('in_footer' => true, 'strategy' => 'defer' ));*/
@@ -40,7 +41,7 @@ function tt_add_jscss() {
 	wp_enqueue_style( 'libs', get_stylesheet_directory_uri() . '/style/libs/common-libs.css', null, null );
 }
 
-add_action( 'wp_enqueue_scripts', 'tt_add_jscss' );
+add_action( 'wp_enqueue_scripts', 'tt_enqueue_assets' );
 
 
 // enqueue styles individually by template
@@ -197,3 +198,15 @@ EOT;
 // Add the filter to modify the output of enqueued styles
 add_filter('style_loader_tag', 'defer_non_style_css_files', 10, 4);
 
+// Remove jQuery Migrate
+function my_theme_remove_jquery_migrate( $scripts ): void
+{
+    if ( ! is_admin() && isset( $scripts->registered['jquery'] ) ) {
+        $script = $scripts->registered['jquery'];
+        if ( $script->deps ) {
+            // Remove 'jquery-migrate' from the dependencies
+            $script->deps = array_diff( $script->deps, array( 'jquery-migrate' ) );
+        }
+    }
+}
+add_action( 'wp_default_scripts', 'my_theme_remove_jquery_migrate' );
