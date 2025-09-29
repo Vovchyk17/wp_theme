@@ -1,5 +1,4 @@
 <?php
-
 // helper function for G-map shortcode
 function javascript_escape($str) {
     $new_str = '';
@@ -115,50 +114,56 @@ if(defined('GOOGLE_MAPS_API_KEY')) {
 } //end GOOGLEMAPS
 
 // shortcode button
-function content_btn($atts,$content){
-    extract(shortcode_atts(array(
+function content_btn($attrs, $content = null): string {
+    $defaults = array(
         'text' => 'Learn More',
         'link' => site_url(),
-        'class' => false,
-        'target' => false,
-        'popup' => false,
-        'video' => false
-    ), $atts ));
-	return '<a href="' . $link . '" class="button'.($class?' '.$class:'').'" '.($target?'target="'.$target.'"  rel="noopener"':'').' 
-            '.($popup?' data-fancybox="" data-src="#'.$popup.'"':'').' '.($video?' data-fancybox=""':'').'>' . $text . '</a>';
+        'class' => '',
+        'target' => '',
+        'popup' => '',
+        'video' => ''
+    );
+    $a = shortcode_atts($defaults, $attrs);
+
+    $classes = 'button' . ($a['class'] ? ' ' . esc_attr($a['class']) : '');
+    $target = $a['target'] ? ' target="' . esc_attr($a['target']) . '" rel="noopener"' : '';
+    $popup = $a['popup'] ? ' data-fancybox="" data-src="#' . esc_attr($a['popup']) . '"' : '';
+    $video = $a['video'] ? ' data-fancybox=""' : '';
+
+    return '<a href="' . esc_url($a['link']) . '" class="' . $classes . '"' . $target . $popup . $video . '>' . esc_html($a['text']) . '</a>';
 }
-add_shortcode("button", "content_btn");
+add_shortcode('button', 'content_btn');
 
 // shortcode social media
-function so_me() {
-	$so_me = get_field('so_me', 'option');
-	$soc = '';
-	if($so_me) {
-		$soc .= '<ul class="so_me">';
-		foreach($so_me as $sm) {
-			$host = parse_url( $sm['link'] );
-			if ( array_key_exists('host', $host ) ) {
-				$parts = explode( '.', $host['host'] );
-				$label = $parts[0] == 'www' ? $parts[1] : $parts[0];
-			} else {
-				$label = get_bloginfo();
-			}
-			$soc .= '<li><a href="'.$sm['link'].'" class="i_'.$sm['icon'].'" target="_blank" rel="noopener" aria-label="'.$label.'"></a></li>';
-		}
-		$soc .= '</ul>';
-	}
-	return $soc;
+function so_me(): string {
+    $so_me = get_field('so_me', 'option');
+    if (!$so_me) {
+        return '';
+    }
+
+    $soc = '<ul class="so_me">';
+    foreach ($so_me as $sm) {
+        $host = parse_url($sm['link'], PHP_URL_HOST);
+        if ($host) {
+            $parts = explode('.', $host);
+            $label = ($parts[0] === 'www' && isset($parts[1])) ? $parts[1] : $parts[0];
+        } else {
+            $label = get_bloginfo();
+        }
+        $soc .= '<li><a href="' . esc_url($sm['link']) . '" class="i_' . esc_attr($sm['icon']) . '" target="_blank" rel="noopener" aria-label="' . esc_attr($label) . '"></a></li>';
+    }
+    $soc .= '</ul>';
+    return $soc;
 }
 add_shortcode('social', 'so_me');
 
-// remove <p> and <br /> from shortcodes
-add_filter('the_content', 'shortcode_empty_paragraph_fix');
-function shortcode_empty_paragraph_fix($content){
-    $array = array (
-        '<p>[' => '[',
-        ']</p>' => ']',
-        ']<br />' => ']'
+// Remove unwanted <p> and <br> tags around shortcodes in post content
+add_filter('the_content', function($content) {
+    $replacements = array(
+        '<p>['    => '[',
+        ']</p>'   => ']',
+        ']<br />' => ']',
+        ']<br>'   => ']',
     );
-    $content = strtr($content, $array);
-    return $content;
-}
+    return strtr($content, $replacements);
+});
