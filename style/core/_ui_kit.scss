@@ -3,22 +3,17 @@
 .button,
 .wp-block-button__link,
 .wp-block-file__button {
-  transition: all 0.3s ease;
-  display: inline-block;
-  vertical-align: middle;
-  font: 400 14px/24px $ff;
-  letter-spacing: 0.03em;
+  display: inline-flex;
+  align-items: center;
+  font: 400 16px/24px $ff;
   text-transform: uppercase;
   color: #fff;
-  padding: 7px 16px;
+  padding: 10px 20px;
   background-color: $tx;
-  border-radius: 0 !important;
   cursor: pointer;
   user-select: none;
-  @include rwd-min(768) {
-    font-size: 15px;
-    padding: 10px 22px;
-  }
+  border-radius: 0 !important;
+
   &.is_full {width: 100%}
   @include hover {background-color: $cl}
 }
@@ -31,81 +26,80 @@
 }
 
 .wp-block-buttons {
-  margin-bottom: 30px;
   &.is-content-justification-center {text-align: center}
   &.is-content-justification-right {text-align: right}
 }
 
+.button_group, .wp-block-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+}
+
 .link {
-  color: $cl;
-  box-shadow: 0 1px;
-  @include hover {box-shadow: 0 0}
+  color: inherit;
+  text-decoration: underline;
+  @include hover {text-decoration: none;}
 }
 
 $headings: 4;
 @for $start from 1 through $headings {
-    h#{$start}, .h#{$start} {
-      font-family: $ff2;
-      font-weight: 700;
-      a {
-        color: inherit;
-        @include hover {color: $cl}
-      }
+  h#{$start}, .h#{$start} {
+    font-family: $ff2;
+    font-weight: 700;
+    a {
+      color: inherit;
+      @include hover {color: $cl}
     }
+  }
 }
 
 h1, .h1 {
   font-size: 51px;
   line-height: 1.25;
 }
+
 h2, .h2 {
   font-size: 28px;
 }
+
 h3, .h3 {
   font-size: 21px;
 }
+
 h4, .h4 {
   font-size: 18px;
 }
+
 h5, .h5 {
   font-size: 16px;
 }
 
 span.full_frame {margin-bottom: 32px}
 
-small, sub {
-  display: inline-block;
-  vertical-align: baseline;
-  font-size: 12px;
-  font-weight: 400;
+small {
+  font-size: 14px;
 }
 
-em, i {font-weight: 400}
+sup, sub {
+  font-size: 65%;
+}
 
-figure {
-  //&.aligncenter img {margin: 0 auto}
-  //&.alignright img {margin-left: auto;}
-  a {
-    display: block;
-    @include hover {opacity: 0.75}
-  }
+figure a {
+  display: block;
+  @include hover {opacity: 0.75}
 }
 
 figcaption {
   font-size: 12px;
   font-weight: 400;
-  padding-top: 10px;
-  @include rwd-min(1025) {padding-top: 15px}
+  margin-top: 12px;
 }
 
 blockquote {
-  font-size: 28px;
-  font-family: $ff2;
-  font-weight: 700;
-  line-height: 1.3;
-  color: $cl;
-  margin: 5px 0 30px;
-  padding: 16px 0 19px 30px;
+  font: 700 28px/1.3 $ff2;
+  margin-bottom: 30px;
+  padding: 16px 0 16px 30px;
   position: relative;
 
   &:before {
@@ -114,9 +108,8 @@ blockquote {
     top: 0;
     left: 0;
     bottom: 0;
-    width: 5px;
-    background: $cl;
-    @include rwd-min(768) {width: 7px}
+    width: 6px;
+    background: $tx;
   }
 
   p {margin-bottom: 0}
@@ -124,7 +117,7 @@ blockquote {
 
 hr {
   border-top: none;
-  border-bottom: 2px solid $cl;
+  border-bottom: 2px solid $tx;
   margin-bottom: 30px;
 }
 
@@ -150,45 +143,38 @@ hr {
     a:not(.button) {@extend .link}
   }
 
-  ul:not(.blocks-gallery-grid), ol {
-    .content *:not(.selectric-items) & {
-      margin-bottom: 32px;
-      li:not(:last-child) {margin-bottom: 16px}
-    }
-  }
+  ul:not(.blocks-gallery-grid):not(.selectric-items) {
+    margin-bottom: 32px;
+    li {
+      padding-left: 18px;
+      position: relative;
 
-  ul:not(.blocks-gallery-grid) {
-    .content *:not(.selectric-items) &  {
-      li {
-        padding-left: 18px;
-        position: relative;
-
-        &:before {
-          content: '';
-          position: absolute;
-          left: 0;
-          top: 9px;
-          width: 6px;
-          height: 6px;
-          border-radius: 50%;
-          background-color: $cl;
-        }
-
-        & > ul {padding: 16px 0 0 32px}
+      &:before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 9px;
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background-color: $tx;
       }
+
+      & > ul {padding: 16px 0 0 32px}
     }
   }
 
   ol {
     list-style-type: none !important;
     counter-reset: decimal_counter;
+    margin-bottom: 32px;
+
     li {
       counter-increment: decimal_counter;
 
       &:before {
         content: counter(decimal_counter) ". ";
-        font-weight: 600;
-        color: $cl;
+        font-weight: inherit;
       }
 
       & > ol {
@@ -227,12 +213,6 @@ hr {
     }
   }
 
-  .is_indent {
-    margin-left: 20px;
-    @include rwd-range(1024, 768) {margin-left: 50px}
-    @include rwd-min(1025) {margin-left: 75px}
-  }
-
 }
 
 .wp-block-table table {
@@ -242,7 +222,7 @@ hr {
 // full-frame responsive video
 .full_frame,
 .is-type-video .wp-block-embed__wrapper,
-.wp-block-embed-soundcloud .wp-block-embed__wrapper, {
+.wp-block-embed-soundcloud .wp-block-embed__wrapper {
   height: 0;margin: 0;overflow: hidden;padding-bottom: 56.5%;position: relative;z-index: 0;
   iframe, object, embed {height: 100%;left: 0;position: absolute;top: 0;width: 100%;z-index: -1}
 }
@@ -305,6 +285,7 @@ hr {
 .rwd_show {
   @include rwd-min(1025) {display: none !important}
 }
+
 .rwd_hide {
   @include rwd-max(1024) {display: none !important}
 }
@@ -312,6 +293,7 @@ hr {
 .mob_show {
   @include rwd-min(768) {display: none !important}
 }
+
 .mob_hide {
   @include rwd-max(767) {display: none !important}
 }
@@ -340,36 +322,4 @@ $columns: 12;
       grid-column: #{$start} / span #{$span} !important;
     }
   }
-}
-
-*:not(.wpcf7) input {
-  &[type='text'],
-  &[type='email'],
-  &[type='tel'],
-  &[type='url'],
-  &[type='search'] {
-    display: block;
-    height: 40px;
-    font: 400 16px $ff;
-    color: $tx;
-    padding: 0 15px;
-    border: 1px solid $cl;
-    background-color: #fff;
-    @include placeholder {color: $tx; opacity: 1}
-
-    &:focus,
-    &:focus-visible {
-      outline: 0 none;
-      border-color: $cl;
-    }
-
-    .is_using_mouse & {
-      &:focus,
-      &:focus-visible {border-color: $cl}
-    }
-  }
-}
-
-input[type='search'] {
-
 }

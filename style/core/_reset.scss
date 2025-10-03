@@ -65,15 +65,11 @@ article, aside, figure, footer, header, nav, section {display: block}
 
 button {background: rgba(255, 255, 255, 0); border: medium none; cursor: pointer;}
 
-ol {list-style-position: inside}
-
 strong, b {font-weight: 700}
-
-td {vertical-align: middle}
 
 table {border-spacing: 0}
 
-mark {background: none}
+td {vertical-align: middle}
 
 ul {list-style: none}
 
@@ -84,19 +80,15 @@ img {
 }
 
 a {
-  transition: all 0.3s ease;
-  color: $cl;
-  outline: 0 none;
+  color: inherit;
   text-decoration: none;
-  @include hover {
-    outline: 0 none;
-    text-decoration: none;
-  }
-  > img {border: 0}
+}
+
+a, button, input, textarea, select, .button {
+  transition: all 0.3s ease;
 }
 
 input:not([type="submit"]):not([type="button"]):not([type="radio"]):not([type="checkbox"]), select, textarea {
-  transition: all 0.3s ease;
   width: 100%;
   outline: 0 none;
   border-radius: 0;
@@ -119,11 +111,6 @@ input[type="button"] {
 input, textarea {
   @include placeholder {color: $tx; opacity: 1}
 }
-
-// selection
-::selection {color: $tx; background-color: $cl}
-
-::-moz-selection {color: $tx; background-color: $cl}
 
 // custom scrollbar - chrome
 html::-webkit-scrollbar {
@@ -159,5 +146,40 @@ a[href], area[href], input:not([disabled]):not([type="hidden"]), select:not([dis
   .is_using_mouse & {
     &:focus,
     &:focus-visible {outline: 0 none}
+  }
+}
+
+*:not(.wpcf7) input {
+  &[type='text'],
+  &[type='email'],
+  &[type='tel'],
+  &[type='url'],
+  &[type='search'] {
+    display: block;
+    height: 40px;
+    font: 400 16px $ff;
+    color: $tx;
+    padding: 0 15px;
+    border: 1px solid $tx;
+    background-color: #fff;
+    @include placeholder {color: $tx; opacity: 1}
+
+    &:focus,
+    &:focus-visible {
+      outline: 0 none;
+      border-color: $cl;
+    }
+
+    .is_using_mouse & {
+      &:focus,
+      &:focus-visible {border-color: $cl}
+    }
+  }
+}
+
+input[type='search'] {
+  &::-webkit-search-cancel-button {
+    -webkit-appearance: none;
+    display: none;
   }
 }

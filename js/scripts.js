@@ -2,15 +2,14 @@
 $ = jQuery;
 
 // control :focus when using mouse/keyboard
-document.body.addEventListener('mousedown', function() {
+document.body.addEventListener('mousedown', function () {
     document.body.classList.add('is_using_mouse');
 });
-document.body.addEventListener('keydown', function() {
+document.body.addEventListener('keydown', function () {
     document.body.classList.remove('is_using_mouse');
 });
 
-
-$(document).ready(function() {
+$(document).ready(function () {
     'use strict';
 
     // variables
@@ -22,7 +21,7 @@ $(document).ready(function() {
 
 
     // hamburger + menu
-    menu__toggle.on('click', function() {
+    menu__toggle.on('click', function () {
         $(this).toggleClass('is_active');
         menu__primary.stop().toggleClass('is_open');
         body.toggleClass('is_overflow');
@@ -52,12 +51,14 @@ $(document).ready(function() {
     // });
     // append "plus" element in sub-menu parent item
     menu__a_parent.after('<span class="rwd_show" tabindex="0" role="button" aria-label="Sub-menu toggle" aria-expanded="false" />');
+
     function sub_menu_action(elem) {
         const exp = elem.attr('aria-expanded');
         (exp === 'false') ? elem.attr('aria-expanded', 'true') : elem.attr('aria-expanded', 'false');
         elem.toggleClass('is_open').next().stop().toggle();
     }
-    menu__primary.on('click', '[aria-label="Sub-menu toggle"]', function() {
+
+    menu__primary.on('click', '[aria-label="Sub-menu toggle"]', function () {
         sub_menu_action($(this));
     }).on('keyup', '[aria-label="Sub-menu toggle"]', function (e) {
         if (e.keyCode === 13) {
@@ -77,7 +78,7 @@ $(document).ready(function() {
     if ($(this).scrollTop() > 4) header.addClass('is_sticky');
 
     // custom select
-    if($('select').length > 0) {
+    if ($('select').length > 0) {
         $('select').selectric({
             disableOnMobile: false,
             nativeOnMobile: false,
@@ -96,11 +97,11 @@ $(document).ready(function() {
             momentum: true
         },
         smallBtn: false,
-        beforeLoad: function( instance, slide ) {
+        beforeLoad: function (instance, slide) {
             // fix if header is sticky
             header.addClass('compensate-for-scrollbar');
         },
-        afterClose: function( instance, slide ) {
+        afterClose: function (instance, slide) {
             // fix if header is sticky
             header.removeClass('compensate-for-scrollbar');
             // remove body class after event
@@ -119,12 +120,12 @@ $(document).ready(function() {
 
     // animations
     // AOS.init({
-        // disable: true,
-        // disable: 'mobile',
-        // once: true,
-        // offset: 150,
-        // duration: 600,
-        // easing: 'ease-in-out'
+    // disable: true,
+    // disable: 'mobile',
+    // once: true,
+    // offset: 150,
+    // duration: 600,
+    // easing: 'ease-in-out'
     // });
 
 
@@ -140,28 +141,37 @@ $(document).ready(function() {
     });
 
     // wrap tables for responsive design
-    if($('.content table').length > 0) {
+    if ($('.content table').length > 0) {
         $('.content table').wrap('<div class="table_wrapper"></div>');
     }
-    
+
+    //if .content has .button + .button wrap in div
+    if ($('.content .button').length > 0) {
+        $('.content .button').each(function () {
+            const t = $(this),
+                n = t.next();
+            if (n.hasClass('button')) {
+                t.add(n).wrapAll('<div class="button_group"></div>');
+            }
+        });
+    }
+
 });
 
 
-
-$(window).on('load', function() {
+$(window).on('load', function () {
     'use strict';
 
     // custom class for video in content (iframe)
-    $('.content iframe').each(function(i) {
+    $('.content iframe').each(function (i) {
         const t = $(this),
             p = t.parent();
-        if ( (p.is('p') || p.is('span') ) && !p.hasClass('full_frame')) {
+        if ((p.is('p') || p.is('span')) && !p.hasClass('full_frame')) {
             p.addClass('full_frame');
         }
     });
 
 });
-
 
 
 // close on click outside
@@ -172,7 +182,6 @@ $(window).on('load', function() {
 //         $('.menu__toggle.is_active').click();
 //     }
 // });
-
 
 
 // proper resize event
